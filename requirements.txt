@@ -1,0 +1,6 @@
+django
+django-cors-headers
+django_rest_framework
+drf-yasg
+psycopg2-binary
+tzdata

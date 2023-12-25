@@ -1,7 +1,7 @@
 import pandas as pd
 class MCDA:
     @staticmethod
-    def Hellwig(alternatives, ideal_solution, distance_metric):
+    def Hellwig(alternatives, ideal_solution, distance_metric, criteria_weights):
         alternatives_df = pd.DataFrame(alternatives)
         for criterion in alternatives_df.columns:
             avg = alternatives_df[criterion].mean()
@@ -9,7 +9,7 @@ class MCDA:
             alternatives_df[criterion] = (alternatives_df[criterion]-avg)/std_dev
         synth_vars = {}
         for i in range(len(alternatives_df)):
-            alternatives_df.at[alternatives_df.index[i], 'di0'] = distance_metric(alternatives_df.at[i], ideal_solution)
+            alternatives_df.at[alternatives_df.index[i], 'di0'] = distance_metric(alternatives_df.at[i], ideal_solution, criteria_weights)
         _d0 = alternatives_df['di0'].sum() / len(alternatives_df)
         Sd0 = math.sqrt(((alternatives_df['di0'] - _d0) ** 2 / len(alternatives_df)).sum())
         d0 = _d0 + 2 * Sd0
