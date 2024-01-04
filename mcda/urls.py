@@ -16,7 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from mcda import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("problem", views.ProblemListApiView.as_view()),
+    path("problem/<problem_id>", views.ProblemDetailApiView.as_view()),
+    path("criterion", views.CriterionListApiView.as_view()),
+    path("criterion/<problem_id>", views.CriterionDetailApiView.as_view()),
+    path("option", views.OptionListApiView.as_view()),
+    path("option/<problem_id>", views.OptionDetailApiView.as_view()),
+    path("crit-option", views.CriterionOptionListApiView.as_view()),
+    path("crit-option/<problem_id>", views.CriterionOptionDetailApiView.as_view()),
 ]
