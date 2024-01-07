@@ -18,7 +18,7 @@ class CriterionSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "problem_id",
+            "problem",
             "type"
         ]
 
@@ -35,7 +35,7 @@ class CriterionOptionSerializer(serializers.ModelSerializer):
         model = CriterionOption
         fields = [
             "id",
-            "option_id",
-            "criterion_id",
+            "option",
+            "criterion",
             "value"
         ]

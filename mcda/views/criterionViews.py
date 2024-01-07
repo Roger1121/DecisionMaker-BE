@@ -13,14 +13,20 @@ class CriterionListApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        data = {
-            "id": request.data.get("id"),
-            "name": request.data.get("name"),
-            "problem_id": request.data.get("problem_id"),
-            "type": request.data.get("type")
-        }
-        serializer = CriterionSerializer(data=data)
+        # data = {
+        #     "id": request.data.get("id"),
+        #     "name": request.data.get("name"),
+        #     "problem_id": request.data.get("problem_id"),
+        #     "type": request.data.get("type")
+        # }
+        is_many = isinstance(request.data, list)
+        if is_many:
+            serializer = CriterionSerializer(data=request.data, many=True)
+        else:
+            serializer = CriterionSerializer(data=request.data)
         if serializer.is_valid():
+            print(request.data)
+            print(serializer.data)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
