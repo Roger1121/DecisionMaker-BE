@@ -8,17 +8,15 @@ from mcda.serializers import CriterionSerializer
 
 class CriterionListApiView(APIView):
     def get(self, request, *args, **kwargs):
-        criteriaList = Criterion.objects
+        problem_id = request.query_params.get('problem_id')
+        if problem_id:
+            criteriaList = Criterion.objects.filter(problem__id=problem_id)
+        else:
+            criteriaList = Criterion.objects
         serializer = CriterionSerializer(criteriaList, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        # data = {
-        #     "id": request.data.get("id"),
-        #     "name": request.data.get("name"),
-        #     "problem_id": request.data.get("problem_id"),
-        #     "type": request.data.get("type")
-        # }
         is_many = isinstance(request.data, list)
         if is_many:
             serializer = CriterionSerializer(data=request.data, many=True)
