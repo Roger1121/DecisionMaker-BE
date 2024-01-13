@@ -8,20 +8,23 @@ from mcda.serializers import OptionSerializer
 
 class OptionListApiView(APIView):
     def get(self, request, *args, **kwargs):
-        optionList = Option.objects
-        serializer = OptionSerializer(optionList, many=True)
+        problem_id = request.query_params.get('problem_id')
+        if problem_id:
+            optionsList = Option.objects.filter(problem__id=problem_id)
+        else:
+            optionsList = Option.objects
+        serializer = OptionSerializer(optionsList, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        data = {
-            "id": request.data.get("id"),
-            "name": request.data.get("name")
-        }
-        serializer = OptionSerializer(data=data)
+        is_many = isinstance(request.data, list)
+        if is_many:
+            serializer = OptionSerializer(data=request.data, many=True)
+        else:
+            serializer = OptionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class OptionDetailApiView(APIView):
@@ -51,7 +54,8 @@ class OptionDetailApiView(APIView):
             )
         data = {
             "id": request.data.get("id"),
-            "name": request.data.get("name")
+            "name": request.data.get("name"),
+            "problem": request.data.get("problem")
         }
         serializer = OptionSerializer(instance=option_instance, data=data, partial=True)
         if serializer.is_valid():

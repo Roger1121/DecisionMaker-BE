@@ -14,6 +14,7 @@ class Criterion(models.Model):
 
 class Option(models.Model):
     name = models.CharField(max_length=200)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
 
 class CriterionOption(models.Model):
     criterion = models.ForeignKey(Criterion, on_delete=models.CASCADE)

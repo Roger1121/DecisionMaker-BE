@@ -27,7 +27,8 @@ class OptionSerializer(serializers.ModelSerializer):
         model = Option
         fields = [
             "id",
-            "name"
+            "name",
+            "problem"
         ]
 
 class CriterionOptionSerializer(serializers.ModelSerializer):
