@@ -1,0 +1,34 @@
+[
+    {
+        "model": "mcda.Option",
+        "pk": 6,
+        "fields": {
+            "name": "Ford Focus",
+            "problem": 1
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 7,
+        "fields": {
+            "name": "Toyota Prius",
+            "problem": 1
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 8,
+        "fields": {
+            "name": "Suzuki Swift",
+            "problem": 1
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 9,
+        "fields": {
+            "name": "Toyota Avensis",
+            "problem": 1
+        }
+    }
+]

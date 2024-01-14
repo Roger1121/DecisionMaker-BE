@@ -1,0 +1,38 @@
+[
+    {
+        "model": "mcda.Criterion",
+        "pk": 2,
+        "fields": {
+            "name": "Rok produkcji",
+            "problem": 1,
+            "type": "liczbowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 3,
+        "fields": {
+            "name": "Cena",
+            "problem": 1,
+            "type": "liczbowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 4,
+        "fields": {
+            "name": "Rodzaj paliwa",
+            "problem": 1,
+            "type": "opisowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 5,
+        "fields": {
+            "name": "Lokalizacja",
+            "problem": 1,
+            "type": "opisowe"
+        }
+    }
+]
