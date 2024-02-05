@@ -5,10 +5,11 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from mcda.models import Problem
 from mcda.serializers import ProblemSerializer
+from mcda.permissions import ReadOnly
 
 
 class ProblemListApiView(APIView):
-    permission_classes=[IsAuthenticated, IsAdminUser]
+    permission_classes=[IsAuthenticated, IsAdminUser|ReadOnly]
     def get(self, request, *args, **kwargs):
         problemList = Problem.objects
         serializer = ProblemSerializer(problemList, many=True)
@@ -30,7 +31,7 @@ class ProblemListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProblemDetailApiView(APIView):
-    permission_classes=[IsAuthenticated, IsAdminUser]
+    permission_classes=[IsAuthenticated, IsAdminUser|ReadOnly]
     def get_object(self, problem_id):
         try:
             return Problem.objects.get(id=problem_id)
