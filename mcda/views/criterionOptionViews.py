@@ -1,12 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from mcda.models import CriterionOption
 from mcda.serializers import CriterionOptionSerializer
 
 
 class CriterionOptionListApiView(APIView):
+    permission_classes=[IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         option_id = request.query_params.get('option_id')
         if option_id:
@@ -28,6 +30,7 @@ class CriterionOptionListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CriterionOptionDetailApiView(APIView):
+    permission_classes=[IsAuthenticated, IsAdminUser]
     def get_object(self, criterion_option_id):
         try:
             return CriterionOption.objects.get(id=criterion_option_id)

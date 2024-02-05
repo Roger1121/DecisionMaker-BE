@@ -1,6 +1,6 @@
 django
 django-cors-headers
 django_rest_framework
-drf-yasg
+djangorestframework-simplejwt
 psycopg2-binary
 tzdata

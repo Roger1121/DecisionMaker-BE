@@ -1,12 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from mcda.models import Criterion
 from mcda.serializers import CriterionSerializer
 
 
 class CriterionListApiView(APIView):
+    permission_classes=[IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         problem_id = request.query_params.get('problem_id')
         if problem_id:
@@ -28,6 +30,7 @@ class CriterionListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CriterionDetailApiView(APIView):
+    permission_classes=[IsAuthenticated, IsAdminUser]
     def get_object(self, criterion_id):
         try:
             return Criterion.objects.get(id=criterion_id)

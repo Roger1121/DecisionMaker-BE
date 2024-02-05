@@ -1,12 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from mcda.models import Option
 from mcda.serializers import OptionSerializer
 
 
 class OptionListApiView(APIView):
+    permission_classes=[IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         problem_id = request.query_params.get('problem_id')
         if problem_id:
@@ -28,6 +30,7 @@ class OptionListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class OptionDetailApiView(APIView):
+    permission_classes=[IsAuthenticated, IsAdminUser]
     def get_object(self, option_id):
         try:
             return Option.objects.get(id=option_id)

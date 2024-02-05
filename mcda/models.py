@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from .managers import CustomUserManager
 
 class Problem(models.Model):
     name = models.CharField(max_length=200)
@@ -21,21 +22,33 @@ class CriterionOption(models.Model):
     option = models.ForeignKey(Option, on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
 
-class AppUser(User):
-    group = models.IntegerField()
+
+class AppUser(AbstractUser):
+    username = None
+    email = models.EmailField("email address", unique=True)
+    training_group = models.IntegerField()
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
 
 class Response(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     criterion = models.ForeignKey(Criterion, on_delete=models.CASCADE)
     criterion_weight = models.FloatField()
     response = models.BinaryField()
 
 class OptionResponse(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     criterion_option = models.ForeignKey(CriterionOption, on_delete=models.CASCADE)
     numeric_value = models.FloatField()
 
 class Rank(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     option = models.ForeignKey(Option, on_delete=models.CASCADE)
     rank = models.IntegerField()
+
