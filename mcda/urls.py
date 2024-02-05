@@ -1,13 +1,11 @@
 from django.urls import path
 from mcda import views
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
+    TokenObtainPairView
 )
 
 urlpatterns = [
     path("token", TokenObtainPairView.as_view()),
-    path("token/refresh", TokenRefreshView.as_view()),
     path("register", views.UserRegisterView.as_view()),
     path("problem", views.ProblemListApiView.as_view()),
     path("problem/<problem_id>", views.ProblemDetailApiView.as_view()),
