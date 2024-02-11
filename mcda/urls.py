@@ -17,5 +17,7 @@ urlpatterns = [
     path("option", views.OptionListApiView.as_view()),
     path("option/<option_id>", views.OptionDetailApiView.as_view()),
     path("crit-option", views.CriterionOptionListApiView.as_view()),
+    path("crit-option/weights", views.CriterionOptionWeightsApiView.as_view()),
     path("crit-option/<crit_option_id>", views.CriterionOptionDetailApiView.as_view()),
+    path("solutions", views.IdealSolutionApiView.as_view()),
 ]

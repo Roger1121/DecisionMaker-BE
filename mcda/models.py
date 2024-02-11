@@ -49,6 +49,12 @@ class CriterionOptionWeight(models.Model):
     criterion_option = models.ForeignKey(CriterionOption, on_delete=models.CASCADE)
     numeric_value = models.FloatField()
 
+class HellwigIdeal(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    criterion_option = models.ForeignKey(CriterionOption, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.__dict__)
+
 class Rank(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     option = models.ForeignKey(Option, on_delete=models.CASCADE)

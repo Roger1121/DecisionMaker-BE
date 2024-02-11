@@ -3,3 +3,4 @@ from .criterionViews import *
 from .optionViews import *
 from .criterionOptionViews import *
 from .userViews import *
+from .solutionViews import *
