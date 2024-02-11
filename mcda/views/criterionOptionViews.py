@@ -12,8 +12,11 @@ class CriterionOptionListApiView(APIView):
     permission_classes=[IsAuthenticated, IsAdminUser|ReadOnly]
     def get(self, request, *args, **kwargs):
         option_id = request.query_params.get('option_id')
+        criterion_id = request.query_params.get('criterion_id')
         if option_id:
             criterionOptionList = CriterionOption.objects.filter(option__id=option_id)
+        elif criterion_id:
+            criterionOptionList = CriterionOption.objects.filter(criterion__id=criterion_id)
         else:
             criterionOptionList = CriterionOption.objects
         serializer = CriterionOptionSerializer(criterionOptionList, many=True)

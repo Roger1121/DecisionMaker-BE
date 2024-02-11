@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
-from mcda.models import Criterion, CriterionWeight
+from mcda.models import Criterion, CriterionWeight, AppUser
 from mcda.serializers import CriterionSerializer
 from mcda.permissions import ReadOnly
 from mcda.jwtUtil import JwtUtil
@@ -107,6 +107,11 @@ class CriteriaWeightsApiView(APIView):
         for weight in request.data:
             weightSum += (int)(weight['weight'])
         weightsList = [CriterionWeight(None, user_id, (int)(weight['criterion']), (int)(weight['weight']), (int)(weight['weight'])/weightSum) for weight in request.data]
-        print(weightsList)
+        if len(CriterionWeight.objects.filter(user_id = user_id)) != 0:
+            return Response(
+                {"res": "Wagi zostały już zapisane wcześniej"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         CriterionWeight.objects.bulk_create(weightsList)
-        return Response("Weights successfully saved", status=status.HTTP_201_CREATED)
+        group = AppUser.objects.filter(id = user_id)[0].training_group
+        return Response(group, status=status.HTTP_201_CREATED)
