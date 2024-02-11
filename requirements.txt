@@ -2,5 +2,6 @@ django
 django-cors-headers
 django_rest_framework
 djangorestframework-simplejwt
+PyJWT
 psycopg2-binary
 tzdata

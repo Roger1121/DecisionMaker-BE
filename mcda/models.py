@@ -36,11 +36,13 @@ class AppUser(AbstractUser):
     def __str__(self):
         return self.email
 
-class Response(models.Model):
+class CriterionWeight(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     criterion = models.ForeignKey(Criterion, on_delete=models.CASCADE)
     criterion_weight = models.FloatField()
-    response = models.BinaryField()
+    criterion_weight_normalized = models.FloatField()
+    def __str__(self):
+        return str(self.__dict__)
 
 class OptionResponse(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)

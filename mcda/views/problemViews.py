@@ -78,3 +78,11 @@ class ProblemDetailApiView(APIView):
             )
         problem_instance.delete()
         return Response({"res": "Problem deleted!"}, status=status.HTTP_200_OK)
+
+
+class AvailableProblemListApiView(APIView):
+    permission_classes=[IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        problemList = Problem.objects.filter(is_available=True)
+        serializer = ProblemSerializer(problemList, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

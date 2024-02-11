@@ -8,8 +8,12 @@ class UserRegisterView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
         password = request.data.get("password")
-        confirmPassword = request.data.get("passwordConfirm")
+        confirmPassword = request.data.get("passwordConfirmation")
         if password != confirmPassword:
             return Response("password and confirmation password don't match", status = status.HTTP_400_BAD_REQUEST)
         AppUser.objects.create_user(email, password)
         return Response("user created", status = status.HTTP_201_CREATED)
+
+class UserScaleView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response(True, status= status.HTTP_200_OK)

@@ -85,15 +85,19 @@ REST_FRAMEWORK = {
     )
 }
 
+JWT_KEY = "3cc2a4fcb7db4549ac15bfcb64a3ba19"
+JWT_ALG = "HS512"
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
-    "ALGORITHM": "HS512",
-    "SIGNING_KEY": "3cc2a4fcb7db4549ac15bfcb64a3ba19",
+    "ALGORITHM": JWT_ALG,
+    "SIGNING_KEY": JWT_KEY,
 
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule"
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
