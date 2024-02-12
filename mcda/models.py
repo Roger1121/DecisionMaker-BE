@@ -27,6 +27,7 @@ class AppUser(AbstractUser):
     username = None
     email = models.EmailField("email address", unique=True)
     training_group = models.IntegerField()
+    scale_type = models.IntegerField()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

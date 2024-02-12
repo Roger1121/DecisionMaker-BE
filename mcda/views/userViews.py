@@ -11,9 +11,10 @@ class UserRegisterView(APIView):
         email = request.data.get("email")
         password = request.data.get("password")
         confirmPassword = request.data.get("passwordConfirmation")
+        scaleType = request.data.get("scaleType")
         if password != confirmPassword:
             return Response("password and confirmation password don't match", status = status.HTTP_400_BAD_REQUEST)
-        AppUser.objects.create_user(email, password)
+        AppUser.objects.create_user(email, password, scaleType)
         return Response("user created", status = status.HTTP_201_CREATED)
 
 class UserScaleView(APIView):
@@ -27,4 +28,4 @@ class UserScaleView(APIView):
             return None
     def get(self, request, *args, **kwargs):
         user_id = self.get_user(request)
-        return Response(AppUser.objects.filter(id = user_id)[0].training_group, status= status.HTTP_200_OK)
+        return Response(AppUser.objects.filter(id = user_id)[0].scale_type, status= status.HTTP_200_OK)

@@ -20,4 +20,5 @@ urlpatterns = [
     path("crit-option/weights", views.CriterionOptionWeightsApiView.as_view()),
     path("crit-option/<crit_option_id>", views.CriterionOptionDetailApiView.as_view()),
     path("solutions", views.IdealSolutionApiView.as_view()),
+    path("solutions/hellwig", views.HellwigResultApiView.as_view()),
 ]
