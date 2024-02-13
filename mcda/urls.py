@@ -8,6 +8,7 @@ urlpatterns = [
     path("token", TokenObtainPairView.as_view()),
     path("register", views.UserRegisterView.as_view()),
     path("user/scale", views.UserScaleView.as_view()),
+    path("user/group", views.UserGroupView.as_view()),
     path("problem", views.ProblemListApiView.as_view()),
     path("problem/available", views.AvailableProblemListApiView.as_view()),
     path("problem/<problem_id>", views.ProblemDetailApiView.as_view()),
@@ -21,4 +22,5 @@ urlpatterns = [
     path("crit-option/<crit_option_id>", views.CriterionOptionDetailApiView.as_view()),
     path("solutions", views.IdealSolutionApiView.as_view()),
     path("solutions/hellwig", views.HellwigResultApiView.as_view()),
+    path("solutions/stage", views.SolvingStageApiView.as_view()),
 ]
