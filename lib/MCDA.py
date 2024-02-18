@@ -11,7 +11,7 @@ class MCDA:
             ideal_solution[i] = (ideal_solution[i]-avg)/std_dev
         synth_vars = {}
         for i in range(len(alternatives_df)):
-            alternatives_df.at[alternatives_df.index[i], 'di0'] = distance_metric(alternatives_df.iloc[i], ideal_solution, criteria_weights)
+            alternatives_df.at[alternatives_df.index[i], 'di0'] = distance_metric(alternatives_df.iloc[i, 0:len(ideal_solution)], ideal_solution, criteria_weights, alternatives_df.iloc[:,0:len(ideal_solution)])
         _d0 = alternatives_df['di0'].sum() / len(alternatives_df)
         Sd0 = math.sqrt(((alternatives_df['di0'] - _d0) ** 2 / len(alternatives_df)).sum())
         d0 = _d0 + 2 * Sd0
