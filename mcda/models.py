@@ -59,7 +59,7 @@ class HellwigIdeal(models.Model):
 class Rank(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     option = models.ForeignKey(Option, on_delete=models.CASCADE)
-    rank = models.IntegerField()
+    rank = models.FloatField()
     def __str__(self):
         return str(self.__dict__)
 

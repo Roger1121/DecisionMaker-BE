@@ -34,9 +34,9 @@ class CriteriaWeightsApiView(APIView):
                 {"res": "Nie podano id problemu"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        weights = CriterionWeight.objects.filter(user_id = user_id, criterion__problem = problem_id)
+        weights = CriterionWeight.objects.filter(user_id=user_id, criterion__problem=problem_id)
         weights = [{"criterion": w.criterion.id, "weight": w.criterion_weight} for w in weights]
-        return Response(weights, status = status.HTTP_200_OK)
+        return Response(weights, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         user_id = self.get_user(request)
@@ -85,9 +85,9 @@ class CriterionOptionWeightsApiView(APIView):
                 {"res": "Nie podano id problemu"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        weights = CriterionOptionWeight.objects.filter(user_id = user_id, criterion_option__criterion__problem = problem_id)
+        weights = CriterionOptionWeight.objects.filter(user_id=user_id, criterion_option__criterion__problem=problem_id)
         weights = [{"criterionOption": w.criterion_option.id, "weight": w.numeric_value} for w in weights]
-        return Response(weights, status = status.HTTP_200_OK)
+        return Response(weights, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         user_id = self.get_user(request)
@@ -120,7 +120,21 @@ class IdealSolutionApiView(APIView):
             return None
 
     def get(self, request, *args, **kwargs):
-        pass;
+        user_id = self.get_user(request)
+        if user_id is None:
+            return Response(
+                {"res": "Nie znaleziono użytkownika w bazie"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        problem_id = request.query_params.get('problem_id')
+        if problem_id is None:
+            return Response(
+                {"res": "Nie podano id problemu"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        ideals = [ideal.criterion_option.id for ideal in
+                  HellwigIdeal.objects.filter(user_id=user_id, criterion_option__option__problem_id=problem_id)]
+        return Response(ideals, status=status.HTTP_201_CREATED)
 
     def post(self, request, *args, **kwargs):
         user_id = self.get_user(request)
@@ -175,8 +189,14 @@ class HellwigResultApiView(APIView):
             )
         options = [option.id for option in Option.objects.filter(problem_id=problem_id).order_by('id')]
         if len(Rank.objects.filter(user_id=user_id, option__in=options)) > 0:
-            return Response(Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank'),
-                            status=status.HTTP_200_OK)
+            ranks = [
+                {
+                    "option": rank.option.id,
+                    "synth_var": rank.rank
+                }
+                for rank in Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank')
+            ]
+            return Response(ranks, status=status.HTTP_200_OK)
         alternatives = np.array([alt.numeric_value for alt in (CriterionOptionWeight.objects
                                                                .filter(user_id=user_id,
                                                                        criterion_option__option__in=options)
@@ -184,18 +204,24 @@ class HellwigResultApiView(APIView):
                                                                          'criterion_option__criterion'))])
         alternatives = np.reshape(alternatives, (len(options), len(alternatives) // (len(options))))
         ideal_options = [ideal.criterion_option.id for ideal in HellwigIdeal.objects
-        .filter(user_id=user_id, criterion_option__option__in=options)
-        .order_by('criterion_option__criterion')]
+                         .filter(user_id=user_id, criterion_option__option__in=options)
+                         .order_by('criterion_option__criterion')]
         ideal_solution = np.array([alt.numeric_value for alt in CriterionOptionWeight.objects
                                   .filter(user_id=user_id, criterion_option__in=ideal_options)
                                   .order_by('criterion_option__criterion')])
         criteria_weights = np.array([crit.criterion_weight_normalized for crit in CriterionWeight.objects
                                     .filter(user_id=user_id).order_by('id')])
         synthVars = MCDA.Hellwig(alternatives, ideal_solution, Distance.Euclidean, criteria_weights)
-        ranks = [Rank(None, user_id, option.id, synthVars[i]) for (i, option) in enumerate(alternatives)]
+        ranks = [Rank(None, user_id, option, synthVars[i]) for (i, option) in enumerate(options)]
         Rank.objects.bulk_create(ranks)
-        return Response(Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank'),
-                        status=status.HTTP_200_OK)
+        ranks = [
+            {
+                "option" : rank.option.id,
+                "synth_var": rank.rank
+            }
+            for rank in Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank')
+        ]
+        return Response(ranks, status=status.HTTP_200_OK)
 
 
 class SolvingStageApiView(APIView):

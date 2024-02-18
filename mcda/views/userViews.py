@@ -42,3 +42,18 @@ class UserGroupView(APIView):
     def get(self, request, *args, **kwargs):
         user_id = self.get_user(request)
         return Response(AppUser.objects.filter(id = user_id)[0].training_group, status= status.HTTP_200_OK)
+
+class UserPrivilegesView(APIView):
+
+    def get_user(self, request):
+        try:
+            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
+            return JwtUtil.get_user(userToken)
+        except:
+            return None
+    def get(self, request, *args, **kwargs):
+        user_id = self.get_user(request)
+        user = AppUser.objects.filter(id = user_id)[0]
+        if user.is_staff:
+            return Response("ADMIN", status=status.HTTP_200_OK)
+        return Response("USER", status= status.HTTP_200_OK)
