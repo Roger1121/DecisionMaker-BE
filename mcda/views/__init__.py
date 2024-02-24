@@ -5,3 +5,4 @@ from .problemViews import *
 from .solutionViews import *
 from .surveyViews import *
 from .userViews import *
+from .ahpViews import *

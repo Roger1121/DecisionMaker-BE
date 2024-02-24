@@ -1,7 +1,7 @@
 [
     {
         "model": "mcda.Criterion",
-        "pk": 2,
+        "pk": 1,
         "fields": {
             "name": "Rok produkcji",
             "problem": 1,
@@ -10,7 +10,7 @@
     },
     {
         "model": "mcda.Criterion",
-        "pk": 3,
+        "pk": 2,
         "fields": {
             "name": "Cena",
             "problem": 1,
@@ -19,7 +19,7 @@
     },
     {
         "model": "mcda.Criterion",
-        "pk": 4,
+        "pk": 3,
         "fields": {
             "name": "Rodzaj paliwa",
             "problem": 1,
@@ -28,7 +28,7 @@
     },
     {
         "model": "mcda.Criterion",
-        "pk": 5,
+        "pk": 4,
         "fields": {
             "name": "Lokalizacja",
             "problem": 1,

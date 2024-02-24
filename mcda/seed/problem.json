@@ -1,12 +1,12 @@
 [
-    {
-        "model": "mcda.Problem",
-        "pk": 1,
-        "fields": {
-            "name": "Wybór samochodu",
-            "description": "Planujesz zakup samochodu, którym będziesz dojeżdżać na zajęcia na uczelnię. Z racji ograniczonego budżetu nie możesz pozwolić sobie na nowe auto, więc postanawiasz przejrzeć oferty z rynku wtórnego. Twoją uwagę zwracają cztery oferty...",
-            "is_available": false,
-            "group": 1
-        }
+  {
+    "model": "mcda.Problem",
+    "pk": 1,
+    "fields": {
+      "name": "Wybór samochodu",
+      "description": "Planujesz zakup samochodu, którym będziesz dojeżdżać na zajęcia na uczelnię. Z racji ograniczonego budżetu nie możesz pozwolić sobie na nowe auto, więc postanawiasz przejrzeć oferty z rynku wtórnego. Twoją uwagę zwracają cztery oferty...",
+      "is_available": true,
+      "group": 0
     }
+  }
 ]

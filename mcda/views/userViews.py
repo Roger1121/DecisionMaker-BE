@@ -53,6 +53,8 @@ class UserPrivilegesView(APIView):
             return None
     def get(self, request, *args, **kwargs):
         user_id = self.get_user(request)
+        if user_id is None:
+            return Response("NOT_LOGGED_IN", status=status.HTTP_200_OK)
         user = AppUser.objects.filter(id = user_id)[0]
         if user.is_staff:
             return Response("ADMIN", status=status.HTTP_200_OK)

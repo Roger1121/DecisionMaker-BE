@@ -1,11 +1,92 @@
 [
     {
         "model": "mcda.CriterionOption",
+        "pk": 1,
+        "fields": {
+            "criterion": 1,
+            "option": 1,
+            "value": "2010"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 2,
+        "fields": {
+            "criterion": 2,
+            "option": 1,
+            "value": "10200"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 3,
+        "fields": {
+            "criterion": 3,
+            "option": 1,
+            "value": "Diesel"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 4,
+        "fields": {
+            "criterion": 4,
+            "option": 1,
+            "value": "Warszawa"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 5,
+        "fields": {
+            "criterion": 1,
+            "option": 2,
+            "value": "2006"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 6,
+        "fields": {
+            "criterion": 2,
+            "option": 2,
+            "value": "12000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 7,
+        "fields": {
+            "criterion": 3,
+            "option": 2,
+            "value": "Benzyna"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 8,
+        "fields": {
+            "criterion": 4,
+            "option": 2,
+            "value": "Bytom"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 9,
+        "fields": {
+            "criterion": 1,
+            "option": 3,
+            "value": "2004"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
         "pk": 10,
         "fields": {
             "criterion": 2,
-            "option": 6,
-            "value": "2010"
+            "option": 3,
+            "value": "11990"
         }
     },
     {
@@ -13,8 +94,8 @@
         "pk": 11,
         "fields": {
             "criterion": 3,
-            "option": 6,
-            "value": "10200"
+            "option": 3,
+            "value": "Benzyna+LPG"
         }
     },
     {
@@ -22,17 +103,17 @@
         "pk": 12,
         "fields": {
             "criterion": 4,
-            "option": 6,
-            "value": "Diesel"
+            "option": 3,
+            "value": "Białystok"
         }
     },
     {
         "model": "mcda.CriterionOption",
         "pk": 13,
         "fields": {
-            "criterion": 5,
-            "option": 6,
-            "value": "Warszawa"
+            "criterion": 1,
+            "option": 4,
+            "value": "2001"
         }
     },
     {
@@ -40,8 +121,8 @@
         "pk": 14,
         "fields": {
             "criterion": 2,
-            "option": 7,
-            "value": "2006"
+            "option": 4,
+            "value": "10950"
         }
     },
     {
@@ -49,8 +130,8 @@
         "pk": 15,
         "fields": {
             "criterion": 3,
-            "option": 7,
-            "value": "12000"
+            "option": 4,
+            "value": "Hybryda"
         }
     },
     {
@@ -58,88 +139,7 @@
         "pk": 16,
         "fields": {
             "criterion": 4,
-            "option": 7,
-            "value": "Benzyna"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 17,
-        "fields": {
-            "criterion": 5,
-            "option": 7,
-            "value": "Bytom"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 18,
-        "fields": {
-            "criterion": 2,
-            "option": 8,
-            "value": "2004"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 19,
-        "fields": {
-            "criterion": 3,
-            "option": 8,
-            "value": "11990"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 20,
-        "fields": {
-            "criterion": 4,
-            "option": 8,
-            "value": "Benzyna+LPG"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 21,
-        "fields": {
-            "criterion": 5,
-            "option": 8,
-            "value": "Białystok"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 22,
-        "fields": {
-            "criterion": 2,
-            "option": 9,
-            "value": "2001"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 23,
-        "fields": {
-            "criterion": 3,
-            "option": 9,
-            "value": "10950"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 24,
-        "fields": {
-            "criterion": 4,
-            "option": 9,
-            "value": "Hybryda"
-        }
-    },
-    {
-        "model": "mcda.CriterionOption",
-        "pk": 25,
-        "fields": {
-            "criterion": 5,
-            "option": 9,
+            "option": 4,
             "value": "Leszno"
         }
     }

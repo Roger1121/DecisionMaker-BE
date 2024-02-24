@@ -67,3 +67,15 @@ class SolvingStage(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     stage = models.IntegerField(default = 0)
+
+class CriteriaComparison(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    criterion_a = models.ForeignKey(Criterion, on_delete=models.CASCADE, related_name='criterion_a_comparison')
+    criterion_b = models.ForeignKey(Criterion, on_delete=models.CASCADE, related_name='criterion_b_comparison')
+    value = models.IntegerField()
+
+class OptionComparison(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    option_a = models.ForeignKey(CriterionOption, on_delete=models.CASCADE, related_name='option_a_comparison')
+    option_b = models.ForeignKey(CriterionOption, on_delete=models.CASCADE, related_name='option_b_comparison')
+    value = models.IntegerField()

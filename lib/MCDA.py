@@ -5,10 +5,8 @@ class MCDA:
     def Hellwig(alternatives, ideal_solution, distance_metric, criteria_weights):
         alternatives_df = pd.DataFrame(alternatives)
         for i, criterion in enumerate(alternatives_df.columns):
-            avg = alternatives_df[criterion].mean()
-            std_dev = alternatives_df[criterion].std()
-            alternatives_df[criterion] = (alternatives_df[criterion]-avg)/std_dev
-            ideal_solution[i] = (ideal_solution[i]-avg)/std_dev
+            alternatives_df[criterion] = 1 - abs(ideal_solution[i] - alternatives_df[criterion])/(alternatives_df[criterion].max() - alternatives_df[criterion].min())
+            ideal_solution[i] = 1
         synth_vars = {}
         for i in range(len(alternatives_df)):
             alternatives_df.at[alternatives_df.index[i], 'di0'] = distance_metric(alternatives_df.iloc[i, 0:len(ideal_solution)], ideal_solution, criteria_weights, alternatives_df.iloc[:,0:len(ideal_solution)])
