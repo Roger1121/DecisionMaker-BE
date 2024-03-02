@@ -16,3 +16,7 @@ class MCDA:
         for i in range(len(alternatives_df)):
             synth_vars[i] = 1 - alternatives_df.at[alternatives_df.index[i], 'di0'] / d0
         return synth_vars
+
+    @staticmethod
+    def AHP(criteriaMatrix, optionMatrices, distance_metric):
+        pass
