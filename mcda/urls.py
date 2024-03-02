@@ -3,6 +3,7 @@ from mcda import views
 from rest_framework_simplejwt.views import (
     TokenObtainPairView
 )
+
 urlpatterns = [
     path("token", TokenObtainPairView.as_view()),
     path("register", views.UserRegisterView.as_view()),
@@ -28,5 +29,8 @@ urlpatterns = [
     path("solutions/hellwig", views.HellwigResultApiView.as_view()),
     path("solutions/stage", views.SolvingStageApiView.as_view()),
     path("survey/available", views.SurveyAvailableApiView.as_view()),
+    path("survey", views.SurveyApiView.as_view()),
+    path("question", views.QuestionApiView.as_view()),
+    path("question/<question_id>", views.QuestionDetailsApiView.as_view()),
 ]
 

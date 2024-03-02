@@ -79,3 +79,11 @@ class OptionComparison(models.Model):
     option_a = models.ForeignKey(CriterionOption, on_delete=models.CASCADE, related_name='option_a_comparison')
     option_b = models.ForeignKey(CriterionOption, on_delete=models.CASCADE, related_name='option_b_comparison')
     value = models.IntegerField()
+
+class Question(models.Model):
+    content = models.CharField(max_length=200)
+
+class QuestionResponse(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    content = models.CharField(max_length=2000)
