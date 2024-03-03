@@ -4,7 +4,7 @@ from .managers import CustomUserManager
 
 class Problem(models.Model):
     name = models.CharField(max_length=200)
-    description = models.CharField(max_length=2000)
+    description = models.CharField(max_length=10000)
     is_available = models.BooleanField()
     group = models.IntegerField()
 

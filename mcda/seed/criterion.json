@@ -3,7 +3,7 @@
         "model": "mcda.Criterion",
         "pk": 1,
         "fields": {
-            "name": "Rok produkcji",
+            "name": "Cena",
             "problem": 1,
             "type": "liczbowe"
         }
@@ -12,16 +12,16 @@
         "model": "mcda.Criterion",
         "pk": 2,
         "fields": {
-            "name": "Cena",
+            "name": "Procesor",
             "problem": 1,
-            "type": "liczbowe"
+            "type": "opisowe"
         }
     },
     {
         "model": "mcda.Criterion",
         "pk": 3,
         "fields": {
-            "name": "Rodzaj paliwa",
+            "name": "Karta graficzna",
             "problem": 1,
             "type": "opisowe"
         }
@@ -30,9 +30,45 @@
         "model": "mcda.Criterion",
         "pk": 4,
         "fields": {
-            "name": "Lokalizacja",
+            "name": "Rodzaj matrycy",
             "problem": 1,
             "type": "opisowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 5,
+        "fields": {
+            "name": "Cena",
+            "problem": 2,
+            "type": "liczbowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 6,
+        "fields": {
+            "name": "Paliwo",
+            "problem": 2,
+            "type": "opisowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 7,
+        "fields": {
+            "name": "Przebieg",
+            "problem": 2,
+            "type": "liczbowe"
+        }
+    },
+    {
+        "model": "mcda.Criterion",
+        "pk": 8,
+        "fields": {
+            "name": "Rok produkcji",
+            "problem": 2,
+            "type": "liczbowe"
         }
     }
 ]

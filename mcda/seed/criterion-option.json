@@ -5,7 +5,7 @@
         "fields": {
             "criterion": 1,
             "option": 1,
-            "value": "2010"
+            "value": "4299"
         }
     },
     {
@@ -14,7 +14,7 @@
         "fields": {
             "criterion": 2,
             "option": 1,
-            "value": "10200"
+            "value": "Intel core i5-13450HX"
         }
     },
     {
@@ -23,7 +23,7 @@
         "fields": {
             "criterion": 3,
             "option": 1,
-            "value": "Diesel"
+            "value": "Nvidia RTX 3050"
         }
     },
     {
@@ -32,7 +32,7 @@
         "fields": {
             "criterion": 4,
             "option": 1,
-            "value": "Warszawa"
+            "value": "Matowa WVA"
         }
     },
     {
@@ -41,7 +41,7 @@
         "fields": {
             "criterion": 1,
             "option": 2,
-            "value": "2006"
+            "value": "4499"
         }
     },
     {
@@ -50,7 +50,7 @@
         "fields": {
             "criterion": 2,
             "option": 2,
-            "value": "12000"
+            "value": "AMD Ryzen 7 7735U"
         }
     },
     {
@@ -59,7 +59,7 @@
         "fields": {
             "criterion": 3,
             "option": 2,
-            "value": "Benzyna"
+            "value": "Zintegrowana Radeon 680M"
         }
     },
     {
@@ -68,7 +68,7 @@
         "fields": {
             "criterion": 4,
             "option": 2,
-            "value": "Bytom"
+            "value": "Błyszcząca OLED"
         }
     },
     {
@@ -77,7 +77,7 @@
         "fields": {
             "criterion": 1,
             "option": 3,
-            "value": "2004"
+            "value": "3099"
         }
     },
     {
@@ -86,7 +86,7 @@
         "fields": {
             "criterion": 2,
             "option": 3,
-            "value": "11990"
+            "value": "AMD Ryzen 5 7535HS"
         }
     },
     {
@@ -95,7 +95,7 @@
         "fields": {
             "criterion": 3,
             "option": 3,
-            "value": "Benzyna+LPG"
+            "value": "AMD Radeon RX 6550M"
         }
     },
     {
@@ -104,7 +104,7 @@
         "fields": {
             "criterion": 4,
             "option": 3,
-            "value": "Białystok"
+            "value": "Matowa IPS"
         }
     },
     {
@@ -113,7 +113,7 @@
         "fields": {
             "criterion": 1,
             "option": 4,
-            "value": "2001"
+            "value": "2599"
         }
     },
     {
@@ -122,7 +122,7 @@
         "fields": {
             "criterion": 2,
             "option": 4,
-            "value": "10950"
+            "value": "Intel core i5-1235U"
         }
     },
     {
@@ -131,7 +131,7 @@
         "fields": {
             "criterion": 3,
             "option": 4,
-            "value": "Hybryda"
+            "value": "Intel Iris Xe"
         }
     },
     {
@@ -140,7 +140,223 @@
         "fields": {
             "criterion": 4,
             "option": 4,
-            "value": "Leszno"
+            "value": "Matowa VA"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 13,
+        "fields": {
+            "criterion": 1,
+            "option": 5,
+            "value": "6899"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 14,
+        "fields": {
+            "criterion": 2,
+            "option": 5,
+            "value": "Apple M2"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 15,
+        "fields": {
+            "criterion": 3,
+            "option": 5,
+            "value": "Zintegrowana Apple M2"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 16,
+        "fields": {
+            "criterion": 4,
+            "option": 5,
+            "value": "Błyszcząca Liquid Retina"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 17,
+        "fields": {
+            "criterion": 5,
+            "option": 6,
+            "value": "9880"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 18,
+        "fields": {
+            "criterion": 5,
+            "option": 7,
+            "value": "11800"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 19,
+        "fields": {
+            "criterion": 5,
+            "option": 8,
+            "value": "11900"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 20,
+        "fields": {
+            "criterion": 5,
+            "option": 9,
+            "value": "14000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 21,
+        "fields": {
+            "criterion": 5,
+            "option": 10,
+            "value": "18900"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 22,
+        "fields": {
+            "criterion": 6,
+            "option": 6,
+            "value": "Benzyna"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 23,
+        "fields": {
+            "criterion": 6,
+            "option": 7,
+            "value": "Benzyna+LPG"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 24,
+        "fields": {
+            "criterion": 6,
+            "option": 8,
+            "value": "Diesel"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 25,
+        "fields": {
+            "criterion": 6,
+            "option": 9,
+            "value": "Hybryda"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 26,
+        "fields": {
+            "criterion": 6,
+            "option": 10,
+            "value": "Elektryk"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 27,
+        "fields": {
+            "criterion": 7,
+            "option": 6,
+            "value": "178000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 28,
+        "fields": {
+            "criterion": 7,
+            "option": 7,
+            "value": "220000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 29,
+        "fields": {
+            "criterion": 7,
+            "option": 8,
+            "value": "199000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 30,
+        "fields": {
+            "criterion": 7,
+            "option": 9,
+            "value": "347000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 31,
+        "fields": {
+            "criterion": 7,
+            "option": 10,
+            "value": "142000"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 32,
+        "fields": {
+            "criterion": 8,
+            "option": 10,
+            "value": "2010"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 33,
+        "fields": {
+            "criterion": 8,
+            "option": 10,
+            "value": "2006"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 34,
+        "fields": {
+            "criterion": 8,
+            "option": 10,
+            "value": "2009"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 35,
+        "fields": {
+            "criterion": 8,
+            "option": 10,
+            "value": "2005"
+        }
+    },
+    {
+        "model": "mcda.CriterionOption",
+        "pk": 36,
+        "fields": {
+            "criterion": 8,
+            "option": 10,
+            "value": "2013"
         }
     }
 ]

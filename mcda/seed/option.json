@@ -3,7 +3,7 @@
         "model": "mcda.Option",
         "pk": 1,
         "fields": {
-            "name": "Ford Focus",
+            "name": "Dell G15 5530-8454",
             "problem": 1
         }
     },
@@ -11,7 +11,7 @@
         "model": "mcda.Option",
         "pk": 2,
         "fields": {
-            "name": "Toyota Prius",
+            "name": "Lenovo Yoga 7-14",
             "problem": 1
         }
     },
@@ -19,7 +19,7 @@
         "model": "mcda.Option",
         "pk": 3,
         "fields": {
-            "name": "Suzuki Swift",
+            "name": "MSI Bravo 15",
             "problem": 1
         }
     },
@@ -27,8 +27,56 @@
         "model": "mcda.Option",
         "pk": 4,
         "fields": {
-            "name": "Toyota Avensis",
+            "name": "HP 250 G9",
             "problem": 1
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 5,
+        "fields": {
+            "name": "Apple MacBook Air",
+            "problem": 1
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 6,
+        "fields": {
+            "name": "Fiat Panda",
+            "problem": 2
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 7,
+        "fields": {
+            "name": "Ford Focus",
+            "problem": 2
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 8,
+        "fields": {
+            "name": "Peugeot 207 SW",
+            "problem": 2
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 9,
+        "fields": {
+            "name": "Honda Civic",
+            "problem": 2
+        }
+    },
+    {
+        "model": "mcda.Option",
+        "pk": 10,
+        "fields": {
+            "name": "Nissan Leaf",
+            "problem": 2
         }
     }
 ]
