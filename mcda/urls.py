@@ -32,5 +32,7 @@ urlpatterns = [
     path("survey", views.SurveyApiView.as_view()),
     path("question", views.QuestionApiView.as_view()),
     path("question/<question_id>", views.QuestionDetailsApiView.as_view()),
+    path("password/recovery/request", views.UserPasswordRecoveryRequestView.as_view()),
+    path("password/reset", views.UserPasswordResetView.as_view()),
 ]
 

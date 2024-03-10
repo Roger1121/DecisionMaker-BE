@@ -2,6 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.core.mail import send_mail
+import uuid
 
 from mcda.models import AppUser
 from mcda.jwtUtil import JwtUtil
@@ -59,3 +61,26 @@ class UserPrivilegesView(APIView):
         if user.is_staff:
             return Response("ADMIN", status=status.HTTP_200_OK)
         return Response("USER", status= status.HTTP_200_OK)
+
+class UserPasswordRecoveryRequestView(APIView):
+    def post(self, request, *args, **kwargs):
+        email = request.data['email']
+        user = AppUser.objects.filter(email = email).first()
+        token = user.reset_token
+        if token is None or token == "":
+            token = uuid.uuid4()
+            user.reset_token = token
+            print(token)
+            user.save()
+        reset_link = "localhost:4200/password/reset/"+str(token)
+        send_mail("Reset hasła",
+                  "Drogi użytkowniku,\n otrzymalismy twoją prośbę o zresetowanie hasła. Aby to zrobić kliknij w poniższy link, a następnie wprowadź nowe hasło.\n" + reset_link + "\nPozdrawiamy\nZespół DecisionMaker.",
+                  "decisionmakerpb@gmail.com",
+                  [email],
+                  fail_silently=False)
+        return Response("Na podany adres email wysłana została wiadomość z linkiem do resetu hasła.", status = status.HTTP_200_OK)
+
+class UserPasswordResetView(APIView):
+    def post(self, request, *args, **kwargs):
+        #password reset logic
+        return Response("Hasło zostało pomyślnie zresetowane.", status = status.HTTP_200_OK)
