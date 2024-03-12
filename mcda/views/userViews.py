@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from mcda.settings import APP_URI
 from django.core.mail import send_mail
 import uuid
 
@@ -72,7 +73,7 @@ class UserPasswordRecoveryRequestView(APIView):
             user.reset_token = token
             print(token)
             user.save()
-        reset_link = "localhost:4200/password/reset/"+str(token)
+        reset_link = APP_URI+"/password/reset/"+str(token)
         send_mail("Reset hasła",
                   "Drogi użytkowniku,\n otrzymalismy twoją prośbę o zresetowanie hasła. Aby to zrobić kliknij w poniższy link, a następnie wprowadź nowe hasło.\n" + reset_link + "\nPozdrawiamy\nZespół DecisionMaker.",
                   "decisionmakerpb@gmail.com",
@@ -82,5 +83,16 @@ class UserPasswordRecoveryRequestView(APIView):
 
 class UserPasswordResetView(APIView):
     def post(self, request, *args, **kwargs):
-        #password reset logic
+        email = request.data['email']
+        token = request.data['token']
+        password = request.data['password']
+        passwordConfirm = request.data['confirmPassword']
+        if passwordConfirm != password:
+            return Response("Hasła nie są zgodne", status = status.HTTP_400_BAD_REQUEST)
+        user = AppUser.objects.filter(email=email, reset_token=token).first()
+        if not user:
+            return Response("Nie znaleziono użytkownika", status=status.HTTP_400_BAD_REQUEST)
+        user.reset_token = token
+        user.set_password(password)
+        user.save()
         return Response("Hasło zostało pomyślnie zresetowane.", status = status.HTTP_200_OK)

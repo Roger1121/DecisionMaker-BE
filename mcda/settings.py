@@ -160,3 +160,5 @@ EMAIL_HOST_USER="decisionmakerpb@gmail.com"
 EMAIL_HOST_PASSWORD="zazegvltibawtkdq"
 EMAIL_USE_TLS=True
 DEFAULT_FROM_EMAIL="decisionmakerpb@gmail.com"
+
+APP_URI="localhost:4200"
