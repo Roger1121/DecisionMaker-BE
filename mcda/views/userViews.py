@@ -16,9 +16,9 @@ class UserRegisterView(APIView):
         confirmPassword = request.data.get("passwordConfirmation")
         scaleType = request.data.get("scaleType")
         if password != confirmPassword:
-            return Response("password and confirmation password don't match", status = status.HTTP_400_BAD_REQUEST)
+            return Response("Hasła nie są zgodne", status = status.HTTP_400_BAD_REQUEST)
         AppUser.objects.create_user(email, password, scaleType)
-        return Response("user created", status = status.HTTP_201_CREATED)
+        return Response("Pomyślnie utworzono konto użytkownika", status = status.HTTP_201_CREATED)
 
 class UserScaleView(APIView):
     permission_classes = [IsAuthenticated]

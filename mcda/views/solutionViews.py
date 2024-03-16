@@ -25,13 +25,13 @@ class CriteriaWeightsApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weights = CriterionWeight.objects.filter(user_id=user_id, criterion__problem=problem_id)
@@ -42,12 +42,12 @@ class CriteriaWeightsApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(CriterionWeight.objects.filter(user_id=user_id)) != 0:
             return Response(
-                {"res": "Wagi zostały już zapisane wcześniej"},
+                "Wagi zostały już zapisane wcześniej",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weightSum = 0
@@ -76,13 +76,13 @@ class CriterionOptionWeightsApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weights = CriterionOptionWeight.objects.filter(user_id=user_id, criterion_option__criterion__problem=problem_id)
@@ -93,12 +93,12 @@ class CriterionOptionWeightsApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't save option weights"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(CriterionOptionWeight.objects.filter(user_id=user_id)) != 0:
             return Response(
-                {"res": "Wagi zostały już zapisane wcześniej"},
+                "Wagi zostały już zapisane wcześniej",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weightsList = [CriterionOptionWeight(None, user_id, int(weight['criterionOption']), int(weight['weight'])) for
@@ -106,7 +106,7 @@ class CriterionOptionWeightsApiView(APIView):
         CriterionOptionWeight.objects.bulk_create(weightsList)
         problem_id = CriterionOption.objects.filter(id=weightsList[0].criterion_option.id).first().criterion.problem.id
         SolvingStage.objects.filter(user_id=user_id, problem_id=problem_id).update(stage=2)
-        return Response("OK", status=status.HTTP_201_CREATED)
+        return Response("Pomyślnie zapisano wagi opcji", status=status.HTTP_201_CREATED)
 
 
 class IdealSolutionApiView(APIView):
@@ -123,13 +123,13 @@ class IdealSolutionApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         ideals = [ideal.criterion_option.id for ideal in
@@ -140,12 +140,12 @@ class IdealSolutionApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't save option weights"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(HellwigIdeal.objects.filter(user_id=user_id)) != 0:
             return Response(
-                {"res": "Wzorzec rozwoju został już wyznaczony"},
+                "Wzorzec rozwoju został już wyznaczony",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         print(str(request.data))
@@ -154,7 +154,7 @@ class IdealSolutionApiView(APIView):
         problem_id = CriterionOption.objects.filter(
             id=solutionsList[0].criterion_option.id).first().criterion.problem.id
         SolvingStage.objects.filter(user_id=user_id, problem_id=problem_id).update(stage=3)
-        return Response("OK", status=status.HTTP_201_CREATED)
+        return Response("Pomyślnie zapisano wzorzec rozwoju", status=status.HTTP_201_CREATED)
 
 
 class HellwigResultApiView(APIView):
@@ -171,20 +171,20 @@ class HellwigResultApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't get result."},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(HellwigIdeal.objects.filter(user_id=user_id)) == 0 or len(
                 CriterionWeight.objects.filter(user_id=user_id)) == 0 or len(
             CriterionOptionWeight.objects.filter(user_id=user_id)) == 0:
             return Response(
-                {"res": "Nie ukończono analizy problemu. Nie można pobrać wyników"},
+                "Nie ukończono analizy problemu. Nie można pobrać wyników",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu."},
+                "Nie podano id problemu.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         options = [option.id for option in Option.objects.filter(problem_id=problem_id).order_by('id')]
@@ -238,7 +238,7 @@ class SolvingStageApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't get result."},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         stages = [{"problem": stage.problem.id, "stage": stage.stage} for stage in

@@ -20,14 +20,13 @@ class SurveyApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if SolvingStage.objects.filter(user_id = user_id, stage = 3).count() < 2:
             Response(
-                {
-                    "res": "Ankieta może zostać wypelniona dopiero po ukończeniu dwóch zadań."
-                }, status=status.HTTP_200_OK)
+                "Ankieta może zostać wypelniona dopiero po ukończeniu dwóch zadań.",
+                status=status.HTTP_200_OK)
         return Response([
             {
                 "content": question.content
@@ -36,8 +35,7 @@ class SurveyApiView(APIView):
     def post(self, request, *args, **kwargs):
         user_id = self.get_user(request)
         if user_id is None:
-            return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+            return Response("Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         responses = [QuestionResponse(None, user_id, int(resp["question"]), resp["content"]) for resp in request.data]
@@ -57,8 +55,7 @@ class SurveyAvailableApiView(APIView):
     def get(self, request, *args, **kwargs):
         user_id = self.get_user(request)
         if user_id is None:
-            return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+            return Response("Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(SolvingStage.objects.filter(user_id = user_id, stage = 3).count() == 2, status=status.HTTP_200_OK)

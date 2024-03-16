@@ -45,7 +45,7 @@ class CriterionDetailApiView(APIView):
         criterion_instance = self.get_object(criterion_id)
         if not criterion_instance:
             return Response(
-                {"res": "Criterion with id does not exists"},
+                "Kryterium o podanym id nie istnieje",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -56,7 +56,7 @@ class CriterionDetailApiView(APIView):
         criterion_instance = self.get_object(criterion_id)
         if not criterion_instance:
             return Response(
-                {"res": "Criterion with id does not exists"},
+                "Kryterium o podanym id nie istnieje",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         data = {
@@ -75,9 +75,9 @@ class CriterionDetailApiView(APIView):
         criterion_instance = self.get_object(criterion_id)
         if not criterion_instance:
             return Response(
-                {"res": "Criterion with id does not exists"},
+                "Kryterium o podanym id nie istnieje",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         criterion_instance.delete()
-        return Response({"res": "Criterion deleted!"}, status=status.HTTP_200_OK)
+        return Response("Kryterium zostało usunięte", status=status.HTTP_200_OK)
 

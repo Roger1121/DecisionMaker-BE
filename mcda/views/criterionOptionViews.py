@@ -45,7 +45,7 @@ class CriterionOptionDetailApiView(APIView):
         criterion_option_instance = self.get_object(criterion_option_id)
         if not criterion_option_instance:
             return Response(
-                {"res": "CriterionOption with id does not exists"},
+                "Nie istnieje opcja o podanym numerze id",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -56,8 +56,8 @@ class CriterionOptionDetailApiView(APIView):
         criterion_option_instance = self.get_object(criterion_option_id)
         if not criterion_option_instance:
             return Response(
-                {"res": "CriterionOption with id does not exists"},
+                "Nie istnieje opcja o podanym numerze id",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         criterion_option_instance.delete()
-        return Response({"res": "CriterionOption deleted!"}, status=status.HTTP_200_OK)
+        return Response("Opcja została usunięta", status=status.HTTP_200_OK)

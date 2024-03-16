@@ -42,7 +42,7 @@ class ProblemDetailApiView(APIView):
         problem_instance = self.get_object(problem_id)
         if not problem_instance:
             return Response(
-                {"res": "Problem with id does not exists"},
+                "Problem o podanym id nie istnieje",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -53,7 +53,7 @@ class ProblemDetailApiView(APIView):
         problem_instance = self.get_object(problem_id)
         if not problem_instance:
             return Response(
-                {"res": "Problem with id does not exists"},
+                "Problem o podanym id nie istnieje",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         data = {
@@ -73,11 +73,11 @@ class ProblemDetailApiView(APIView):
         problem_instance = self.get_object(problem_id)
         if not problem_instance:
             return Response(
-                {"res": "Problem with id does not exists"},
+                "Problem o podanym id nie istnieje",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_instance.delete()
-        return Response({"res": "Problem deleted!"}, status=status.HTTP_200_OK)
+        return Response("Problem został usunięty", status=status.HTTP_200_OK)
 
 
 class AvailableProblemListApiView(APIView):

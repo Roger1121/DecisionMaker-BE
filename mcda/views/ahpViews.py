@@ -22,13 +22,13 @@ class CriteriaComparisonApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weights = CriteriaComparison.objects.filter(user_id=user_id, criterion_a__problem=problem_id)
@@ -39,12 +39,12 @@ class CriteriaComparisonApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't save option weights"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(CriteriaComparison.objects.filter(user_id=user_id)) != 0:
             return Response(
-                {"res": "Wartości porównań kryteriów zostały już zapisane wcześniej"},
+                "Wartości porównań kryteriów zostały już zapisane wcześniej",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weightsList = [CriteriaComparison(None, user_id, int(weight['criterionA']), int(weight['criterionB']), int(weight['value'])) for
@@ -52,7 +52,7 @@ class CriteriaComparisonApiView(APIView):
         CriteriaComparison.objects.bulk_create(weightsList)
         problem_id = Criterion.objects.filter(id=weightsList[0].criterion_a.id).first().problem.id
         SolvingStage(None, user_id, problem_id, 2).save()
-        return Response("OK", status=status.HTTP_201_CREATED)
+        return Response("Porównania kryteriówm pomyślnie zapisane", status=status.HTTP_201_CREATED)
 
 class OptionComparisonApiView(APIView):
     permission_classes = [IsAuthenticated]
@@ -68,13 +68,13 @@ class OptionComparisonApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weights = OptionComparison.objects.filter(user_id=user_id, option_a__option__problem=problem_id)
@@ -85,12 +85,12 @@ class OptionComparisonApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't save option weights"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(OptionComparison.objects.filter(user_id=user_id)) != 0:
             return Response(
-                {"res": "Wartości porównań opcji zostały już zapisane wcześniej"},
+                "Wartości porównań opcji zostały już zapisane wcześniej",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         weightsList = [OptionComparison(None, user_id, int(weight['optionA']), int(weight['optionB']), int(weight['value'])) for
@@ -98,7 +98,7 @@ class OptionComparisonApiView(APIView):
         OptionComparison.objects.bulk_create(weightsList)
         problem_id = CriterionOption.objects.filter(id=weightsList[0].option_a.id).first().option.problem.id
         SolvingStage.objects.filter(user_id=user_id, problem_id=problem_id).update(stage=3)
-        return Response("OK", status=status.HTTP_201_CREATED)
+        return Response("Pomyślnie zapisano porównania opcji", status=status.HTTP_201_CREATED)
 
 class CriterionMatrixApiView(APIView):
     permission_classes = [IsAuthenticated]
@@ -114,13 +114,13 @@ class CriterionMatrixApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         criteria = Criterion.objects.filter(problem = problem_id)
@@ -157,13 +157,13 @@ class OptionMatrixApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Nie znaleziono użytkownika w bazie"},
+                "Nie znaleziono użytkownika w bazie",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu"},
+                "Nie podano id problemu",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         criteria = Criterion.objects.filter(problem = problem_id)
@@ -205,19 +205,19 @@ class AhpResultApiView(APIView):
         user_id = self.get_user(request)
         if user_id is None:
             return Response(
-                {"res": "Couldn't get result."},
+                "Podczas pobierania wyników wystąpił błąd.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if len(CriteriaComparison.objects.filter(user_id=user_id)) == 0 or len(
                 OptionComparison.objects.filter(user_id=user_id)) == 0:
             return Response(
-                {"res": "Nie ukończono analizy problemu. Nie można pobrać wyników"},
+                "Nie ukończono analizy problemu. Nie można pobrać wyników",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         problem_id = request.query_params.get('problem_id')
         if problem_id is None:
             return Response(
-                {"res": "Nie podano id problemu."},
+                "Nie podano id problemu.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
         options = [option.id for option in Option.objects.filter(problem_id=problem_id).order_by('id')]
