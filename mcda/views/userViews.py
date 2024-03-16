@@ -89,9 +89,9 @@ class UserPasswordResetView(APIView):
         if passwordConfirm != password:
             return Response("Hasła nie są zgodne", status = status.HTTP_400_BAD_REQUEST)
         user = AppUser.objects.filter(email=email, reset_token=token).first()
-        if not user:
+        if user is None:
             return Response("Nie znaleziono użytkownika", status=status.HTTP_400_BAD_REQUEST)
-        user.reset_token = token
+        user.reset_token = None
         user.set_password(password)
         user.save()
         return Response("Hasło zostało pomyślnie zresetowane.", status = status.HTTP_200_OK)

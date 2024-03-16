@@ -28,7 +28,7 @@ class AppUser(AbstractUser):
     email = models.EmailField("email address", unique=True)
     training_group = models.IntegerField()
     scale_type = models.IntegerField()
-    reset_token = models.CharField(max_length=40)
+    reset_token = models.CharField(max_length=40, blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
