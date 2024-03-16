@@ -23,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-$op#!3x68#-($b#3a$g3^ecy(4wd8tcw^gn5-tjc&x#-i3j02y"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+  'localhost',
+  '127.0.0.1']
 
 # Application definition
 
@@ -78,6 +80,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 ]
 
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'mcda.exceptionHandlers.custom_exception_handler',
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
     'DEFAULT_AUTHENTICATION_CLASSES': (
