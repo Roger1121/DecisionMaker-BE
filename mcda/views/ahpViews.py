@@ -51,7 +51,7 @@ class CriteriaComparisonApiView(APIView):
                        weight in request.data]
         CriteriaComparison.objects.bulk_create(weightsList)
         problem_id = Criterion.objects.filter(id=weightsList[0].criterion_a.id).first().problem.id
-        SolvingStage.objects.filter(user_id=user_id, problem_id=problem_id).update(stage=2)
+        SolvingStage(None, user_id, problem_id, 2).save()
         return Response("OK", status=status.HTTP_201_CREATED)
 
 class OptionComparisonApiView(APIView):
