@@ -71,7 +71,6 @@ class UserPasswordRecoveryRequestView(APIView):
         if token is None or token == "":
             token = uuid.uuid4()
             user.reset_token = token
-            print(token)
             user.save()
         reset_link = APP_URI+"/password/reset/"+str(token)
         send_mail("Reset hasła",

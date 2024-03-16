@@ -148,7 +148,6 @@ class IdealSolutionApiView(APIView):
                 "Wzorzec rozwoju został już wyznaczony",
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        print(str(request.data))
         solutionsList = [HellwigIdeal(None, user_id, int(solution['criterionOption'])) for solution in request.data]
         HellwigIdeal.objects.bulk_create(solutionsList)
         problem_id = CriterionOption.objects.filter(
