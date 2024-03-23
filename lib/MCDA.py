@@ -1,5 +1,7 @@
 import pandas as pd
 import math
+import numpy as np
+
 class MCDA:
     @staticmethod
     def Hellwig(alternatives, ideal_solution, distance_metric, criteria_weights):
@@ -22,3 +24,27 @@ class MCDA:
     @staticmethod
     def AHP(criteriaMatrix, optionMatrices, distance_metric):
         pass
+
+    @staticmethod
+    def AHPMatrixConsistencyFactor(matrix):
+        r_factors = \
+            {
+                3: 0.58,
+                4: 0.90,
+                5: 1.12,
+                6: 1.24,
+                7: 1.32,
+                8: 1.41,
+                9: 1.45,
+                10:1.49
+            }
+        max_eigen_val = float('-inf')
+        for val in np.linalg.eig(np.matrix(matrix))[0]:
+            if val == val.real and val.real > max_eigen_val:
+                max_eigen_val = val
+        m = len(matrix)
+        if m > 10 or m < 3:
+            r = 1
+        else:
+            r = r_factors[m]
+        return (max_eigen_val - m)/(r *(m-1))

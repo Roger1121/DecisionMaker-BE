@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from collections import defaultdict
 
 from mcda.models import CriteriaComparison, Criterion, SolvingStage, OptionComparison, CriterionOption, Rank, Option
 from mcda.jwtUtil import JwtUtil
@@ -49,6 +50,30 @@ class CriteriaComparisonApiView(APIView):
             )
         weightsList = [CriteriaComparison(None, user_id, int(weight['criterionA']), int(weight['criterionB']), int(weight['value'])) for
                        weight in request.data]
+        criteria = Criterion.objects.filter(problem_id = weightsList[0].criterion_a.problem.id)
+        matrix = [[0] * len(criteria)] * len(criteria)
+        for i, criterionA in enumerate(criteria):
+            for j, criterionB in enumerate(criteria):
+                if matrix[i][j] != 0:
+                    continue
+                elif i == j:
+                    matrix[i][j] = {"value": 1, "reversed": False}
+                else:
+                    comparison = list(filter(lambda weight: weight.criterion_a.id == criterionA.id and weight.criterion_b.id == criterionB.id, weightsList))
+                    if len(comparison) == 0:
+                        comparison = list(filter(lambda weight: weight.criterion_a.id == criterionB.id and weight.criterion_b.id == criterionA.id, weightsList))
+                        matrix[i][j] = 1/comparison[0].value
+                        matrix[j][i] = comparison[0].value
+                    else:
+                        matrix[i][j] = comparison[0].value
+                        matrix[j][i] = 1/comparison[0].value
+        consistencyFactor = MCDA.AHPMatrixConsistencyFactor(matrix)
+        if consistencyFactor > 1:
+            return Response(
+                "Macierz porównań nie jest spójna. Sprawdź poprawność oceny rozwiązań.",
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         CriteriaComparison.objects.bulk_create(weightsList)
         problem_id = Criterion.objects.filter(id=weightsList[0].criterion_a.id).first().problem.id
         SolvingStage(None, user_id, problem_id, 2).save()
@@ -95,6 +120,37 @@ class OptionComparisonApiView(APIView):
             )
         weightsList = [OptionComparison(None, user_id, int(weight['optionA']), int(weight['optionB']), int(weight['value'])) for
                        weight in request.data]
+
+        weights_by_criteria = defaultdict(list)
+        for weight in weightsList:
+            weights_by_criteria[weight.option_a.criterion_id].append(weight)
+
+        for criterion, weights_list in weights_by_criteria.items():
+            options = CriterionOption.objects.filter(criterion = criterion)
+            matrix = [[0] * len(options)] * len(options)
+            for i, optionA in enumerate(options):
+                for j, optionB in enumerate(options):
+                    if matrix[i][j] != 0:
+                        continue
+                    elif i == j:
+                        matrix[i][j] = {"value": 1, "reversed": False}
+                    else:
+                        comparison = list(filter(lambda weight: weight.option_a.id == optionA.id and weight.option_b.id == optionB.id, weights_list))
+                        if len(comparison) == 0:
+                            comparison = list(filter(lambda weight: weight.option_a.id == optionB.id and weight.option_b.id == optionA.id, weights_list))
+                            matrix[i][j] = 1 / comparison[0].value
+                            matrix[j][i] = comparison[0].value
+                        else:
+                            matrix[i][j] = comparison[0].value
+                            matrix[j][i] = 1 / comparison[0].value
+            consistencyFactor = MCDA.AHPMatrixConsistencyFactor(matrix)
+            if consistencyFactor > 1:
+                criterion_object = Criterion.objects.filter(id = criterion).first()
+                return Response(
+                    f"Macierz porównań dla kryterium '{criterion_object.name}' nie jest spójna. Sprawdź poprawność oceny rozwiązań.",
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
         OptionComparison.objects.bulk_create(weightsList)
         problem_id = CriterionOption.objects.filter(id=weightsList[0].option_a.id).first().option.problem.id
         SolvingStage.objects.filter(user_id=user_id, problem_id=problem_id).update(stage=3)
@@ -134,13 +190,13 @@ class CriterionMatrixApiView(APIView):
                 else:
                     comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a = criterionA.id, criterion_b = criterionB.id)
                     if len(comparison) == 0:
-                        comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionA.id,
-                                                                       criterion_b=criterionB.id)
+                        comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
+                                                                       criterion_b=criterionA.id)
                         matrix[i][j] = {"value": comparison[0].value, "reversed": True}
-                        matrix[i][j] = {"value": comparison[0].value, "reversed": False}
+                        matrix[j][i] = {"value": comparison[0].value, "reversed": False}
                     else:
                         matrix[i][j] = {"value": comparison[0].value, "reversed": False}
-                        matrix[i][j] = {"value": comparison[0].value, "reversed": True}
+                        matrix[j][i] = {"value": comparison[0].value, "reversed": True}
         return Response(matrix, status = status.HTTP_200_OK)
 
 class OptionMatrixApiView(APIView):
@@ -181,13 +237,13 @@ class OptionMatrixApiView(APIView):
                         comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
                                                                        option_b=optionB.id)
                         if len(comparison) == 0:
-                            comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
-                                                                           option_b=optionB.id)
+                            comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionB.id,
+                                                                           option_b=optionA.id)
                             matrix[i][j] = {"value": comparison[0].value, "reversed": True}
-                            matrix[i][j] = {"value": comparison[0].value, "reversed": False}
+                            matrix[j][i] = {"value": comparison[0].value, "reversed": False}
                         else:
                             matrix[i][j] = {"value": comparison[0].value, "reversed": False}
-                            matrix[i][j] = {"value": comparison[0].value, "reversed": True}
+                            matrix[j][i] = {"value": comparison[0].value, "reversed": True}
             optionMatrices.append({"criterion":criterion.id, "matrix":matrix})
         return Response(optionMatrices, status = status.HTTP_200_OK)
 
@@ -242,13 +298,13 @@ class AhpResultApiView(APIView):
                     comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionA.id,
                                                                    criterion_b=criterionB.id)
                     if len(comparison) == 0:
-                        comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionA.id,
-                                                                       criterion_b=criterionB.id)
+                        comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
+                                                                       criterion_b=criterionA.id)
                         criteriaMatrix[i][j] = 1 / comparison[0].value
-                        criteriaMatrix[i][j] = comparison[0].value
+                        criteriaMatrix[j][i] = comparison[0].value
                     else:
                         criteriaMatrix[i][j] = comparison[0].value
-                        criteriaMatrix[i][j] = 1 / comparison[0].value
+                        criteriaMatrix[j][i] = 1 / comparison[0].value
         optionMatrices = []
         for criterion in criteria:
             options = CriterionOption.objects.filter(criterion=criterion.id)
@@ -263,13 +319,13 @@ class AhpResultApiView(APIView):
                         comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
                                                                      option_b=optionB.id)
                         if len(comparison) == 0:
-                            comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
-                                                                         option_b=optionB.id)
+                            comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionB.id,
+                                                                         option_b=optionA.id)
                             matrix[i][j] = 1 / comparison[0].value
-                            matrix[i][j] = comparison[0].value
+                            matrix[j][i] = comparison[0].value
                         else:
                             matrix[i][j] = comparison[0].value
-                            matrix[i][j] = 1 / comparison[0].value
+                            matrix[j][i] = 1 / comparison[0].value
             optionMatrices.append({"criterion": criterion.id, "matrix": matrix})
         synthVars = MCDA.AHP(criteriaMatrix, optionMatrices, Distance.Mahalanobis)
         ranks = [Rank(None, user_id, option, synthVars[i]) for (i, option) in enumerate(options)]
