@@ -307,10 +307,10 @@ class AhpResultApiView(APIView):
                         criteriaMatrix[j][i] = 1 / comparison[0].value
         optionMatrices = []
         for criterion in criteria:
-            options = CriterionOption.objects.filter(criterion=criterion.id)
-            matrix = [[0] * len(options)] * len(options)
-            for i, optionA in enumerate(options):
-                for j, optionB in enumerate(options):
+            crit_options = CriterionOption.objects.filter(criterion=criterion.id).order_by('criterion')
+            matrix = [[0] * len(crit_options)] * len(crit_options)
+            for i, optionA in enumerate(crit_options):
+                for j, optionB in enumerate(crit_options):
                     if matrix[i][j] != 0:
                         continue
                     elif i == j:
@@ -326,8 +326,8 @@ class AhpResultApiView(APIView):
                         else:
                             matrix[i][j] = comparison[0].value
                             matrix[j][i] = 1 / comparison[0].value
-            optionMatrices.append({"criterion": criterion.id, "matrix": matrix})
-        synthVars = MCDA.AHP(criteriaMatrix, optionMatrices, Distance.Mahalanobis)
+            optionMatrices.append(matrix)
+        synthVars = MCDA.AHP(criteriaMatrix, optionMatrices)
         ranks = [Rank(None, user_id, option, synthVars[i]) for (i, option) in enumerate(options)]
         Rank.objects.bulk_create(ranks)
         ranks = [

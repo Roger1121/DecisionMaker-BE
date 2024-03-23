@@ -27,6 +27,7 @@ urlpatterns = [
     path("crit-option/<crit_option_id>", views.CriterionOptionDetailApiView.as_view()),
     path("solutions", views.IdealSolutionApiView.as_view()),
     path("solutions/hellwig", views.HellwigResultApiView.as_view()),
+    path("solutions/ahp", views.AhpResultApiView.as_view()),
     path("solutions/stage", views.SolvingStageApiView.as_view()),
     path("survey/available", views.SurveyAvailableApiView.as_view()),
     path("survey", views.SurveyApiView.as_view()),

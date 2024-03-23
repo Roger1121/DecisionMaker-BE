@@ -22,8 +22,23 @@ class MCDA:
         return synth_vars
 
     @staticmethod
-    def AHP(criteriaMatrix, optionMatrices, distance_metric):
-        pass
+    def AHP(criteriaMatrix, optionMatrices):
+        eig = np.linalg.eig(criteriaMatrix)
+        maxidx = 0
+        for i, val in enumerate(eig[0]):
+            if val == val.real and val.real > eig[0][maxidx]:
+                maxidx = i
+        criteria_vector = np.matrix(eig[1][:, maxidx].real).T
+        option_vectors = []
+        for matrix in optionMatrices:
+            eig = np.linalg.eig(matrix)
+            maxidx = 0
+            for i, val in enumerate(eig[0]):
+                if val == val.real and val.real > eig[0][maxidx]:
+                    maxidx = i
+            option_vectors.append(eig[1][:, maxidx].real)
+        C = np.matrix(option_vectors).T
+        return C*criteria_vector
 
     @staticmethod
     def AHPMatrixConsistencyFactor(matrix):
