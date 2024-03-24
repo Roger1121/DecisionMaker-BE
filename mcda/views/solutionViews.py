@@ -58,8 +58,7 @@ class CriteriaWeightsApiView(APIView):
         CriterionWeight.objects.bulk_create(weightsList)
         problem_id = Criterion.objects.filter(id=weightsList[0].criterion.id).first().problem.id
         SolvingStage(None, user_id, problem_id, 1).save()
-        group = AppUser.objects.filter(id=user_id)[0].training_group
-        return Response(group, status=status.HTTP_201_CREATED)
+        return Response("Wagi kryteriów zostały pomyślnie zapisane", status=status.HTTP_201_CREATED)
 
 
 class CriterionOptionWeightsApiView(APIView):
