@@ -83,6 +83,11 @@ class OptionComparison(models.Model):
 
 class Question(models.Model):
     content = models.CharField(max_length=200)
+    type = models.CharField(max_length=10)
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
 
 class QuestionResponse(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
