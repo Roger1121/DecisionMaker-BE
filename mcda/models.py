@@ -74,6 +74,8 @@ class CriteriaComparison(models.Model):
     criterion_a = models.ForeignKey(Criterion, on_delete=models.CASCADE, related_name='criterion_a_comparison')
     criterion_b = models.ForeignKey(Criterion, on_delete=models.CASCADE, related_name='criterion_b_comparison')
     value = models.IntegerField()
+    def __str__(self):
+        return f"criterionA: {self.criterion_a.id}, criterionB: {self.criterion_b.id}, value: {self.value}"
 
 class OptionComparison(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)

@@ -51,7 +51,7 @@ class CriteriaComparisonApiView(APIView):
         weightsList = [CriteriaComparison(None, user_id, int(weight['criterionA']), int(weight['criterionB']), int(weight['value'])) for
                        weight in request.data]
         criteria = Criterion.objects.filter(problem_id = weightsList[0].criterion_a.problem.id)
-        matrix = [[0] * len(criteria)] * len(criteria)
+        matrix = [[0 for i in range(len(criteria))] for j in range(len(criteria))]
         for i, criterionA in enumerate(criteria):
             for j, criterionB in enumerate(criteria):
                 if matrix[i][j] != 0:
@@ -127,7 +127,7 @@ class OptionComparisonApiView(APIView):
 
         for criterion, weights_list in weights_by_criteria.items():
             options = CriterionOption.objects.filter(criterion = criterion)
-            matrix = [[0] * len(options)] * len(options)
+            matrix = [[0 for i in range(len(options))] for j in range(len(options))]
             for i, optionA in enumerate(options):
                 for j, optionB in enumerate(options):
                     if matrix[i][j] != 0:
@@ -180,23 +180,28 @@ class CriterionMatrixApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         criteria = Criterion.objects.filter(problem = problem_id)
-        matrix = [[0] * len(criteria)] * len(criteria)
+        matrix = [[0 for i in range(len(criteria))] for j in range(len(criteria))]
         for i, criterionA in enumerate(criteria):
             for j, criterionB in enumerate(criteria):
                 if matrix[i][j] != 0:
                     continue
                 elif i == j:
                     matrix[i][j] = {"value": 1, "reversed": False}
+                    print(matrix)
                 else:
                     comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a = criterionA.id, criterion_b = criterionB.id)
                     if len(comparison) == 0:
                         comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
                                                                        criterion_b=criterionA.id)
+                        print(comparison[0])
                         matrix[i][j] = {"value": comparison[0].value, "reversed": True}
                         matrix[j][i] = {"value": comparison[0].value, "reversed": False}
+                        print(matrix)
                     else:
+                        print(comparison[0])
                         matrix[i][j] = {"value": comparison[0].value, "reversed": False}
                         matrix[j][i] = {"value": comparison[0].value, "reversed": True}
+                        print(matrix)
         return Response(matrix, status = status.HTTP_200_OK)
 
 class OptionMatrixApiView(APIView):
@@ -226,7 +231,7 @@ class OptionMatrixApiView(APIView):
         optionMatrices = []
         for criterion in criteria:
             options = CriterionOption.objects.filter(criterion = criterion.id)
-            matrix = [[0] * len(options)] * len(options)
+            matrix = [[0 for i in range(len(options))] for j in range(len(options))]
             for i, optionA in enumerate(options):
                 for j, optionB in enumerate(options):
                     if matrix[i][j] != 0:
@@ -308,7 +313,7 @@ class AhpResultApiView(APIView):
         optionMatrices = []
         for criterion in criteria:
             crit_options = CriterionOption.objects.filter(criterion=criterion.id).order_by('criterion')
-            matrix = [[0] * len(crit_options)] * len(crit_options)
+            matrix = [[0 for i in range(len(crit_options))] for j in range(len(crit_options))]
             for i, optionA in enumerate(crit_options):
                 for j, optionB in enumerate(crit_options):
                     if matrix[i][j] != 0:
