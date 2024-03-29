@@ -1,0 +1,82 @@
+[
+    {
+        "model": "mcda.Question",
+        "pk": 1,
+        "fields": {
+            "content": "Która z metod w Twojej opinii stworzyła ranking bliższy oczekwianemu?",
+            "type": "warianty"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 2,
+        "fields": {
+            "content": "Która z metod była według Ciebie łatwiejsza w użyciu?",
+            "type": "warianty"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 3,
+        "fields": {
+            "content": "Jakie zalety miała według Ciebie metoda AHP?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 4,
+        "fields": {
+            "content": "Jakie wady miała według Ciebie metoda AHP?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 5,
+        "fields": {
+            "content": "Jakie zalety miała według Ciebie metoda Hellwiga?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 6,
+        "fields": {
+            "content": "Jakie zalety wady według Ciebie metoda Hellwiga?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 7,
+        "fields": {
+            "content": "Gdybyś w przyszłości miał/miała możliwość wykorzystania jednej z zaprezentowanych metod do rozwiązania problemu, Którą metodę byś wybrał/wybrała i dlaczego?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 8,
+        "fields": {
+            "content": "Czy w trakcie korzystania z aplikacji trafiłeś/trafiłaś na jakieś błędy?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 9,
+        "fields": {
+            "content": "Co chciałby/chciałabyś zmienić w tej aplikacji?",
+            "type": "otwarte"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 10,
+        "fields": {
+            "content": "Czy masz jakieś dodatkowe uwagi dotyczące zaprezentowanych metod lub działania aplikacji?",
+            "type": "otwarte"
+        }
+    }
+]
