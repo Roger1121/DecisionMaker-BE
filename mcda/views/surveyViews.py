@@ -25,12 +25,13 @@ class SurveyApiView(APIView):
             )
         if SolvingStage.objects.filter(user_id = user_id, stage = 3).count() < 2:
             Response(
-                "Ankieta może zostać wypelniona dopiero po ukończeniu dwóch zadań.",
+                "Ankieta może zostać wypełniona dopiero po ukończeniu dwóch zadań.",
                 status=status.HTTP_200_OK)
         return Response([
             {
-                "content": question.content
-            } for question in Question.objects], status=status.HTTP_200_OK)
+                "question":response.question.id,
+                "content": response.content
+            } for response in QuestionResponse.objects.all()], status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         user_id = self.get_user(request)
@@ -39,8 +40,8 @@ class SurveyApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         responses = [QuestionResponse(None, user_id, int(resp["question"]), resp["content"]) for resp in request.data]
-        QuestionResponse.bulkCreate(responses)
-        return Response("OK", status=status.HTTP_201_CREATED)
+        QuestionResponse.objects.bulk_create(responses)
+        return Response("Dodane odpowiedzi zostały zapisane", status=status.HTTP_201_CREATED)
 
 class SurveyAvailableApiView(APIView):
     permission_classes = [IsAuthenticated]

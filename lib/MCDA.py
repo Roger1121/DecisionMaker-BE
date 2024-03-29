@@ -54,6 +54,7 @@ class MCDA:
                 10:1.49
             }
         max_eigen_val = float('-inf')
+        print(np.matrix(matrix))
         for val in np.linalg.eig(np.matrix(matrix))[0]:
             if val == val.real and val.real > max_eigen_val:
                 max_eigen_val = val

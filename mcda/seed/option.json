@@ -3,7 +3,7 @@
         "model": "mcda.Option",
         "pk": 1,
         "fields": {
-            "name": "Dell G15 5530-8454",
+            "name": "Dell G15",
             "problem": 1
         }
     },
@@ -11,7 +11,7 @@
         "model": "mcda.Option",
         "pk": 2,
         "fields": {
-            "name": "Lenovo Yoga 7-14",
+            "name": "Lenovo Yoga",
             "problem": 1
         }
     },
@@ -19,7 +19,7 @@
         "model": "mcda.Option",
         "pk": 3,
         "fields": {
-            "name": "MSI Bravo 15",
+            "name": "MSI Bravo",
             "problem": 1
         }
     },
@@ -27,7 +27,7 @@
         "model": "mcda.Option",
         "pk": 4,
         "fields": {
-            "name": "HP 250 G9",
+            "name": "HP 250",
             "problem": 1
         }
     },
@@ -35,7 +35,7 @@
         "model": "mcda.Option",
         "pk": 5,
         "fields": {
-            "name": "Apple MacBook Air",
+            "name": "MacBook Air",
             "problem": 1
         }
     },

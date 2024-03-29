@@ -5,7 +5,7 @@
         "fields": {
             "criterion": 1,
             "option": 1,
-            "value": "4299"
+            "value": "4699"
         }
     },
     {
@@ -14,7 +14,7 @@
         "fields": {
             "criterion": 2,
             "option": 1,
-            "value": "Intel core i5-13450HX"
+            "value": "Intel i7"
         }
     },
     {
@@ -50,7 +50,7 @@
         "fields": {
             "criterion": 2,
             "option": 2,
-            "value": "AMD Ryzen 7 7735U"
+            "value": "Ryzen 7"
         }
     },
     {
@@ -59,7 +59,7 @@
         "fields": {
             "criterion": 3,
             "option": 2,
-            "value": "Zintegrowana Radeon 680M"
+            "value": "Zintegrowana AMD"
         }
     },
     {
@@ -77,7 +77,7 @@
         "fields": {
             "criterion": 1,
             "option": 3,
-            "value": "3099"
+            "value": "3299"
         }
     },
     {
@@ -86,7 +86,7 @@
         "fields": {
             "criterion": 2,
             "option": 3,
-            "value": "AMD Ryzen 5 7535HS"
+            "value": "Ryzen 5"
         }
     },
     {
@@ -95,7 +95,7 @@
         "fields": {
             "criterion": 3,
             "option": 3,
-            "value": "AMD Radeon RX 6550M"
+            "value": "Radeon RX 6550M"
         }
     },
     {
@@ -122,7 +122,7 @@
         "fields": {
             "criterion": 2,
             "option": 4,
-            "value": "Intel core i5-1235U"
+            "value": "Intel i5"
         }
     },
     {
@@ -149,7 +149,7 @@
         "fields": {
             "criterion": 1,
             "option": 5,
-            "value": "6899"
+            "value": "6099"
         }
     },
     {
@@ -167,7 +167,7 @@
         "fields": {
             "criterion": 3,
             "option": 5,
-            "value": "Zintegrowana Apple M2"
+            "value": "Zintegrowana Apple"
         }
     },
     {
@@ -185,7 +185,7 @@
         "fields": {
             "criterion": 5,
             "option": 6,
-            "value": "9880"
+            "value": "10880"
         }
     },
     {
@@ -221,7 +221,7 @@
         "fields": {
             "criterion": 5,
             "option": 10,
-            "value": "18900"
+            "value": "17400"
         }
     },
     {
@@ -275,7 +275,7 @@
         "fields": {
             "criterion": 7,
             "option": 6,
-            "value": "178000"
+            "value": "198000"
         }
     },
     {
@@ -302,7 +302,7 @@
         "fields": {
             "criterion": 7,
             "option": 9,
-            "value": "347000"
+            "value": "297000"
         }
     },
     {
@@ -320,7 +320,7 @@
         "fields": {
             "criterion": 8,
             "option": 6,
-            "value": "2010"
+            "value": "2009"
         }
     },
     {
@@ -347,7 +347,7 @@
         "fields": {
             "criterion": 8,
             "option": 9,
-            "value": "2005"
+            "value": "2006"
         }
     },
     {

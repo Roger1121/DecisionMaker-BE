@@ -7,7 +7,6 @@ from collections import defaultdict
 from mcda.models import CriteriaComparison, Criterion, SolvingStage, OptionComparison, CriterionOption, Rank, Option
 from mcda.jwtUtil import JwtUtil
 from lib.MCDA import MCDA
-from lib.DistanceMetrics import Distance
 
 class CriteriaComparisonApiView(APIView):
     permission_classes = [IsAuthenticated]
@@ -57,7 +56,7 @@ class CriteriaComparisonApiView(APIView):
                 if matrix[i][j] != 0:
                     continue
                 elif i == j:
-                    matrix[i][j] = {"value": 1, "reversed": False}
+                    matrix[i][j] = 1
                 else:
                     comparison = list(filter(lambda weight: weight.criterion_a.id == criterionA.id and weight.criterion_b.id == criterionB.id, weightsList))
                     if len(comparison) == 0:
@@ -133,7 +132,7 @@ class OptionComparisonApiView(APIView):
                     if matrix[i][j] != 0:
                         continue
                     elif i == j:
-                        matrix[i][j] = {"value": 1, "reversed": False}
+                        matrix[i][j] = 1
                     else:
                         comparison = list(filter(lambda weight: weight.option_a.id == optionA.id and weight.option_b.id == optionB.id, weights_list))
                         if len(comparison) == 0:
