@@ -4,12 +4,16 @@ import numpy as np
 
 class MCDA:
     @staticmethod
-    def Hellwig(alternatives, ideal_solution, distance_metric, criteria_weights):
+    def Hellwig(alternatives, ideal, distance_metric, criteria_weights):
         alternatives_df = pd.DataFrame(alternatives)
+        ideal_solution = ideal.copy()
         for i, criterion in enumerate(alternatives_df.columns):
             max_val = alternatives_df[criterion].max()
             min_val = alternatives_df[criterion].min()
-            alternatives_df[criterion] = 1 - abs(ideal_solution[i] - alternatives_df[criterion])/(max_val - min_val)
+            if min_val == max_val:
+                alternatives_df[criterion] = 1
+            else:
+                alternatives_df[criterion] = 1 - abs(ideal_solution[i] - alternatives_df[criterion])/(max_val - min_val)
             ideal_solution[i] = 1
         synth_vars = {}
         for i in range(len(alternatives_df)):
@@ -54,7 +58,6 @@ class MCDA:
                 10:1.49
             }
         max_eigen_val = float('-inf')
-        print(np.matrix(matrix))
         for val in np.linalg.eig(np.matrix(matrix))[0]:
             if val == val.real and val.real > max_eigen_val:
                 max_eigen_val = val

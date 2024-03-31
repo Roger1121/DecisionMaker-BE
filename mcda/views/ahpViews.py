@@ -186,21 +186,16 @@ class CriterionMatrixApiView(APIView):
                     continue
                 elif i == j:
                     matrix[i][j] = {"value": 1, "reversed": False}
-                    print(matrix)
                 else:
                     comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a = criterionA.id, criterion_b = criterionB.id)
                     if len(comparison) == 0:
                         comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
                                                                        criterion_b=criterionA.id)
-                        print(comparison[0])
                         matrix[i][j] = {"value": comparison[0].value, "reversed": True}
                         matrix[j][i] = {"value": comparison[0].value, "reversed": False}
-                        print(matrix)
                     else:
-                        print(comparison[0])
                         matrix[i][j] = {"value": comparison[0].value, "reversed": False}
                         matrix[j][i] = {"value": comparison[0].value, "reversed": True}
-                        print(matrix)
         return Response(matrix, status = status.HTTP_200_OK)
 
 class OptionMatrixApiView(APIView):
@@ -332,7 +327,7 @@ class AhpResultApiView(APIView):
                             matrix[j][i] = 1 / comparison[0].value
             optionMatrices.append(matrix)
         synthVars = MCDA.AHP(criteriaMatrix, optionMatrices)
-        ranks = [Rank(None, user_id, option, synthVars[i]) for (i, option) in enumerate(options)]
+        ranks = [Rank(None, user_id, option, synthVars[i], "") for (i, option) in enumerate(options)]
         Rank.objects.bulk_create(ranks)
         ranks = [
             {
