@@ -14,5 +14,5 @@ class Distance:
     def Euclidean(solution, ideal_solution, criteria_weights, all_data):
         dist = 0.0
         for i in range(len(criteria_weights)):
-            dist = dist + ((solution[i] - ideal_solution[i])**2) * criteria_weights[i]
+            dist = dist + ((solution[i] - ideal_solution[i])**2) * criteria_weights[i]**2
         return math.sqrt(dist)
