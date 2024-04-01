@@ -26,6 +26,7 @@ SECRET_KEY = "django-insecure-$op#!3x68#-($b#3a$g3^ecy(4wd8tcw^gn5-tjc&x#-i3j02y
 DEBUG = False
 
 ALLOWED_HOSTS = [
+  '212.33.90.138',
   'localhost',
   '127.0.0.1']
 
@@ -113,7 +114,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "mcda.wsgi.application"
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'^http://localhost(:*[0-9]+)*$'
+    r'^http://localhost(:*[0-9]+)*$',
+    r'^http://212.33.90.138'
 ]
 
 REST_FRAMEWORK = {
@@ -201,4 +203,4 @@ EMAIL_HOST_PASSWORD="zazegvltibawtkdq"
 EMAIL_USE_TLS=True
 DEFAULT_FROM_EMAIL="decisionmakerpb@gmail.com"
 
-APP_URI="localhost:4200"
+APP_URI="212.33.90.138"
