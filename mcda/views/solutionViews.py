@@ -209,12 +209,8 @@ class HellwigResultApiView(APIView):
                                   .order_by('criterion_option__criterion')])
         criteria_weights = np.array([crit.criterion_weight_normalized for crit in CriterionWeight.objects
                                     .filter(user_id=user_id).order_by('id')])
-        metric = 'Mahalanobis'
-        try:
-            synthVars = MCDA.Hellwig(alternatives, ideal_solution, Distance.Mahalanobis, criteria_weights)
-        except:
-            metric = 'Euclidean'
-            synthVars = MCDA.Hellwig(alternatives, ideal_solution, Distance.Euclidean, criteria_weights)
+        metric = 'Euclidean'
+        synthVars = MCDA.Hellwig(alternatives, ideal_solution, Distance.Euclidean, criteria_weights)
         ranks = [Rank(None, user_id, option, synthVars[i], metric) for (i, option) in enumerate(options)]
         Rank.objects.bulk_create(ranks)
         ranks = [
