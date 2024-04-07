@@ -8,6 +8,7 @@ class ProblemSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
+            "description_preview",
             "is_available",
             "group"
         ]
