@@ -3,7 +3,7 @@
         "model": "mcda.Question",
         "pk": 1,
         "fields": {
-            "content": "Która z metod w Twojej opinii stworzyła ranking bliższy oczekwianemu?",
+            "content": "Która z metod w Twojej opinii stworzyła ranking bliższy oczekiwanemu?",
             "type": "warianty"
         }
     },
@@ -43,7 +43,7 @@
         "model": "mcda.Question",
         "pk": 6,
         "fields": {
-            "content": "Jakie zalety wady według Ciebie metoda Hellwiga?",
+            "content": "Jakie wady miała według Ciebie metoda Hellwiga?",
             "type": "otwarte"
         }
     },
@@ -51,7 +51,7 @@
         "model": "mcda.Question",
         "pk": 7,
         "fields": {
-            "content": "Gdybyś w przyszłości miał/miała możliwość wykorzystania jednej z zaprezentowanych metod do rozwiązania problemu, Którą metodę byś wybrał/wybrała i dlaczego?",
+            "content": "Gdybyś w przyszłości miał/miała możliwość wykorzystania jednej z zaprezentowanych metod do rozwiązania problemu, którą metodę byś wybrał/wybrała i dlaczego?",
             "type": "otwarte"
         }
     },
@@ -67,7 +67,7 @@
         "model": "mcda.Question",
         "pk": 9,
         "fields": {
-            "content": "Co chciałby/chciałabyś zmienić w tej aplikacji?",
+            "content": "Co chciałbyś/chciałabyś zmienić w tej aplikacji?",
             "type": "otwarte"
         }
     },
