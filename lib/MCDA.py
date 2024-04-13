@@ -1,6 +1,7 @@
 import pandas as pd
 import math
 import numpy as np
+from .Utils import Util
 
 class MCDA:
     @staticmethod
@@ -27,22 +28,11 @@ class MCDA:
 
     @staticmethod
     def AHP(criteriaMatrix, optionMatrices):
-        eig = np.linalg.eig(criteriaMatrix)
-        maxidx = 0
-        for i, val in enumerate(eig[0]):
-            if val == val.real and val.real > eig[0][maxidx]:
-                maxidx = i
-        criteria_vector = np.matrix(eig[1][:, maxidx].real).T
-        option_vectors = []
-        for matrix in optionMatrices:
-            eig = np.linalg.eig(matrix)
-            maxidx = 0
-            for i, val in enumerate(eig[0]):
-                if val == val.real and val.real > eig[0][maxidx]:
-                    maxidx = i
-            option_vectors.append(eig[1][:, maxidx].real)
-        C = np.matrix(option_vectors).T
-        return C*criteria_vector
+        criteria_vector = Util.eig(criteriaMatrix)
+        option_vectors = [np.squeeze(np.asarray(Util.eig(matrix))) for matrix in optionMatrices]
+        print(criteria_vector)
+        print(np.matrix(option_vectors))
+        return np.matrix(option_vectors).T * criteria_vector.T
 
     @staticmethod
     def AHPMatrixConsistencyFactor(matrix):
@@ -57,13 +47,9 @@ class MCDA:
                 9: 1.45,
                 10:1.49
             }
-        max_eigen_val = float('-inf')
-        for val in np.linalg.eig(np.matrix(matrix))[0]:
-            if val == val.real and val.real > max_eigen_val:
-                max_eigen_val = val
         m = len(matrix)
         if m > 10 or m < 3:
             r = 1
         else:
             r = r_factors[m]
-        return (max_eigen_val - m)/(r *(m-1))
+        return (Util.eig_val(matrix) - m)/(r *(m-1))

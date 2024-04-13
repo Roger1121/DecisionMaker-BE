@@ -67,16 +67,16 @@ class CriteriaComparisonApiView(APIView):
                         matrix[i][j] = comparison[0].value
                         matrix[j][i] = 1/comparison[0].value
         consistencyFactor = MCDA.AHPMatrixConsistencyFactor(matrix)
-        if consistencyFactor > 1:
+        if round(consistencyFactor, 3) > 0.1:
             return Response(
-                "Macierz porównań nie jest spójna. Sprawdź poprawność oceny rozwiązań.",
+                f"Macierz porównań nie jest spójna. Współczynnik spójności macierzy przekracza 0.1 i wynosi {round(consistencyFactor, 3)}. Sprawdź poprawność oceny rozwiązań.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         CriteriaComparison.objects.bulk_create(weightsList)
         problem_id = Criterion.objects.filter(id=weightsList[0].criterion_a.id).first().problem.id
         SolvingStage(None, user_id, problem_id, 2).save()
-        return Response("Porównania kryteriówm pomyślnie zapisane", status=status.HTTP_201_CREATED)
+        return Response("Porównania kryteriów pomyślnie zapisane", status=status.HTTP_201_CREATED)
 
 class OptionComparisonApiView(APIView):
     permission_classes = [IsAuthenticated]
@@ -143,10 +143,10 @@ class OptionComparisonApiView(APIView):
                             matrix[i][j] = comparison[0].value
                             matrix[j][i] = 1 / comparison[0].value
             consistencyFactor = MCDA.AHPMatrixConsistencyFactor(matrix)
-            if consistencyFactor > 1:
+            if round(consistencyFactor, 3) > 0.1:
                 criterion_object = Criterion.objects.filter(id = criterion).first()
                 return Response(
-                    f"Macierz porównań dla kryterium '{criterion_object.name}' nie jest spójna. Sprawdź poprawność oceny rozwiązań.",
+                    f"Macierz porównań dla kryterium <b>'{criterion_object.name}'</b> nie jest spójna. Współczynnik spójności macierzy przekracza 0.1 i wynosi {round(consistencyFactor, 3)}. Sprawdź poprawność oceny rozwiązań.",
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
