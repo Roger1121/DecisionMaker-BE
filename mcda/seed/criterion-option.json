@@ -185,7 +185,7 @@
         "fields": {
             "criterion": 5,
             "option": 6,
-            "value": "10880"
+            "value": "11000"
         }
     },
     {
@@ -194,7 +194,7 @@
         "fields": {
             "criterion": 5,
             "option": 7,
-            "value": "11800"
+            "value": "12000"
         }
     },
     {
@@ -203,7 +203,7 @@
         "fields": {
             "criterion": 5,
             "option": 8,
-            "value": "11900"
+            "value": "12000"
         }
     },
     {
@@ -230,7 +230,7 @@
         "fields": {
             "criterion": 6,
             "option": 6,
-            "value": "Benzyna"
+            "value": "Diesel"
         }
     },
     {
@@ -248,7 +248,7 @@
         "fields": {
             "criterion": 6,
             "option": 8,
-            "value": "Diesel"
+            "value": "Benzyna"
         }
     },
     {
@@ -275,7 +275,7 @@
         "fields": {
             "criterion": 7,
             "option": 6,
-            "value": "198000"
+            "value": "199000"
         }
     },
     {
@@ -320,7 +320,7 @@
         "fields": {
             "criterion": 8,
             "option": 6,
-            "value": "2009"
+            "value": "2008"
         }
     },
     {
