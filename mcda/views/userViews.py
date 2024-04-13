@@ -72,7 +72,7 @@ class UserPasswordRecoveryRequestView(APIView):
             token = uuid.uuid4()
             user.reset_token = token
             user.save()
-        reset_link = APP_URI+"/password/reset/"+str(token)
+        reset_link = APP_URI+"/"+str(token)
         send_mail("Reset hasła",
                   "Drogi użytkowniku,\n otrzymalismy twoją prośbę o zresetowanie hasła. Aby to zrobić kliknij w poniższy link, a następnie wprowadź nowe hasło.\n" + reset_link + "\nPozdrawiamy\nZespół DecisionMaker.",
                   "decisionmakerpb@gmail.com",
