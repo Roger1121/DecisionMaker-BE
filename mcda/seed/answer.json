@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "Metoda AHP",
-            "question": 1
+            "question": 7
         }
     },
     {
@@ -12,7 +12,7 @@
         "pk": 2,
         "fields": {
             "name": "Metoda Hellwiga",
-            "question": 1
+            "question": 7
         }
     },
     {
@@ -20,7 +20,7 @@
         "pk": 3,
         "fields": {
             "name": "Rankingi były podobnej jakości",
-            "question": 1
+            "question": 7
         }
     },
     {
@@ -28,7 +28,7 @@
         "pk": 4,
         "fields": {
             "name": "Metoda AHP",
-            "question": 2
+            "question": 8
         }
     },
     {
@@ -36,7 +36,7 @@
         "pk": 5,
         "fields": {
             "name": "Metoda Hellwiga",
-            "question": 2
+            "question": 8
         }
     },
     {
@@ -44,7 +44,7 @@
         "pk": 6,
         "fields": {
             "name": "Obie metody wypadły podobnie",
-            "question": 2
+            "question": 8
         }
     }
 ]

@@ -3,13 +3,61 @@
         "model": "mcda.Question",
         "pk": 1,
         "fields": {
+            "content": "Opis problemu wyboru laptopa był klarowny i łatwy do oceny.",
+            "type": "likert"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 2,
+        "fields": {
+            "content": "Opis problemu wyboru samochodu był klarowny i łatwy do oceny.",
+            "type": "likert"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 3,
+        "fields": {
+            "content": "Uważam, że zastosowanie metod wspomagania decyzji było uzasadnione w problemie wyboru laptopa.",
+            "type": "likert"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 4,
+        "fields": {
+            "content": "Uważam, że zastosowanie metod wspomagania decyzji było uzasadnione w problemie wyboru samochodu.",
+            "type": "likert"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 5,
+        "fields": {
+            "content": "Ranking otrzymany metodą AHP w pełni mnie satysfakcjonował.",
+            "type": "likert"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 6,
+        "fields": {
+            "content": "Ranking otrzymany metodą Hellwiga w pełni mnie satysfakcjonował.",
+            "type": "likert"
+        }
+    },
+    {
+        "model": "mcda.Question",
+        "pk": 7,
+        "fields": {
             "content": "Która z metod w Twojej opinii stworzyła ranking bliższy oczekiwanemu?",
             "type": "warianty"
         }
     },
     {
         "model": "mcda.Question",
-        "pk": 2,
+        "pk": 8,
         "fields": {
             "content": "Która z metod była według Ciebie łatwiejsza w użyciu?",
             "type": "warianty"
@@ -17,7 +65,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 3,
+        "pk": 9,
         "fields": {
             "content": "Jakie zalety miała według Ciebie metoda AHP?",
             "type": "otwarte"
@@ -25,7 +73,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 4,
+        "pk": 10,
         "fields": {
             "content": "Jakie wady miała według Ciebie metoda AHP?",
             "type": "otwarte"
@@ -33,7 +81,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 5,
+        "pk": 11,
         "fields": {
             "content": "Jakie zalety miała według Ciebie metoda Hellwiga?",
             "type": "otwarte"
@@ -41,7 +89,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 6,
+        "pk": 12,
         "fields": {
             "content": "Jakie wady miała według Ciebie metoda Hellwiga?",
             "type": "otwarte"
@@ -49,7 +97,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 7,
+        "pk": 13,
         "fields": {
             "content": "Gdybyś w przyszłości miał/miała możliwość wykorzystania jednej z zaprezentowanych metod do rozwiązania problemu, którą metodę byś wybrał/wybrała i dlaczego?",
             "type": "otwarte"
@@ -57,7 +105,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 8,
+        "pk": 14,
         "fields": {
             "content": "Czy w trakcie korzystania z aplikacji trafiłeś/trafiłaś na jakieś błędy?",
             "type": "otwarte"
@@ -65,7 +113,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 9,
+        "pk": 15,
         "fields": {
             "content": "Co chciałbyś/chciałabyś zmienić w tej aplikacji?",
             "type": "otwarte"
@@ -73,7 +121,7 @@
     },
     {
         "model": "mcda.Question",
-        "pk": 10,
+        "pk": 16,
         "fields": {
             "content": "Czy masz jakieś dodatkowe uwagi dotyczące zaprezentowanych metod lub działania aplikacji?",
             "type": "otwarte"
