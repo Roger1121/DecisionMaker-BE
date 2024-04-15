@@ -67,9 +67,9 @@ class CriteriaComparisonApiView(APIView):
                         matrix[i][j] = comparison[0].value
                         matrix[j][i] = 1/comparison[0].value
         consistencyFactor = MCDA.AHPMatrixConsistencyFactor(matrix)
-        if round(consistencyFactor, 3) > 0.1:
+        if round(consistencyFactor, 3) > 0.15:
             return Response(
-                f"Macierz porównań nie jest spójna. Współczynnik spójności macierzy przekracza 0.1 i wynosi {round(consistencyFactor, 3)}. Sprawdź poprawność oceny rozwiązań.",
+                f"Macierz porównań nie jest spójna. Współczynnik spójności macierzy przekracza 0.15 i wynosi {round(consistencyFactor, 3)}. Sprawdź poprawność oceny rozwiązań.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -143,10 +143,10 @@ class OptionComparisonApiView(APIView):
                             matrix[i][j] = comparison[0].value
                             matrix[j][i] = 1 / comparison[0].value
             consistencyFactor = MCDA.AHPMatrixConsistencyFactor(matrix)
-            if round(consistencyFactor, 3) > 0.1:
+            if round(consistencyFactor, 3) > 0.15:
                 criterion_object = Criterion.objects.filter(id = criterion).first()
                 return Response(
-                    f"Macierz porównań dla kryterium <b>'{criterion_object.name}'</b> nie jest spójna. Współczynnik spójności macierzy przekracza 0.1 i wynosi {round(consistencyFactor, 3)}. Sprawdź poprawność oceny rozwiązań.",
+                    f"Macierz porównań dla kryterium <b>'{criterion_object.name}'</b> nie jest spójna. Współczynnik spójności macierzy przekracza 0.15 i wynosi {round(consistencyFactor, 3)}. Sprawdź poprawność oceny rozwiązań.",
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
