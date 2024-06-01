@@ -16,8 +16,7 @@ class CriteriaWeightsApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -66,8 +65,7 @@ class CriterionOptionWeightsApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -113,8 +111,7 @@ class IdealSolutionApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -160,8 +157,7 @@ class HellwigResultApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 

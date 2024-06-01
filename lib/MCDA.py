@@ -35,6 +35,12 @@ class MCDA:
         return np.matrix(option_vectors).T * criteria_vector.T
 
     @staticmethod
+    def AHP_weights(criteriaMatrix, optionMatrices):
+        criteria_vector = Util.eig(criteriaMatrix)
+        option_vectors = [np.squeeze(np.asarray(Util.eig(matrix))) for matrix in optionMatrices]
+        return criteria_vector, option_vectors
+
+    @staticmethod
     def AHPMatrixConsistencyFactor(matrix):
         r_factors = \
             {

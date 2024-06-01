@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from collections import defaultdict
 
-from mcda.models import CriteriaComparison, Criterion, SolvingStage, OptionComparison, CriterionOption, Rank, Option
+from mcda.models import CriteriaComparison, Criterion, SolvingStage, OptionComparison, CriterionOption, Rank, Option, AppUser
 from mcda.jwtUtil import JwtUtil
 from lib.MCDA import MCDA
 
@@ -13,8 +13,7 @@ class CriteriaComparisonApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -83,8 +82,7 @@ class OptionComparisonApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -160,8 +158,7 @@ class CriterionMatrixApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -203,8 +200,7 @@ class OptionMatrixApiView(APIView):
 
     def get_user(self, request):
         try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
+            return request.query_params.get('user_id')
         except:
             return None
 
@@ -225,6 +221,7 @@ class OptionMatrixApiView(APIView):
         optionMatrices = []
         for criterion in criteria:
             options = CriterionOption.objects.filter(criterion = criterion.id)
+            print(options)
             matrix = [[0 for i in range(len(options))] for j in range(len(options))]
             for i, optionA in enumerate(options):
                 for j, optionB in enumerate(options):
@@ -238,6 +235,7 @@ class OptionMatrixApiView(APIView):
                         if len(comparison) == 0:
                             comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionB.id,
                                                                            option_b=optionA.id)
+                            print(optionB.id, optionA.id, user_id)
                             matrix[i][j] = {"value": comparison[0].value, "reversed": True}
                             matrix[j][i] = {"value": comparison[0].value, "reversed": False}
                         else:
@@ -246,94 +244,211 @@ class OptionMatrixApiView(APIView):
             optionMatrices.append({"criterion":criterion.id, "matrix":matrix})
         return Response(optionMatrices, status = status.HTTP_200_OK)
 
-class AhpResultApiView(APIView):
-    permission_classes = [IsAuthenticated]
+# class AhpResultApiView(APIView):
+#     def get_user(self, request):
+#         try:
+#             return request.query_params.get('user_id')
+#         except:
+#             return None
+#     def get(self, request, *args, **kwargs):
+#         user_id = self.get_user(request)
+#         if user_id is None:
+#             return Response(
+#                 "Podczas pobierania wyników wystąpił błąd.",
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+#         if len(CriteriaComparison.objects.filter(user_id=user_id)) == 0 or len(
+#                 OptionComparison.objects.filter(user_id=user_id)) == 0:
+#             return Response(
+#                 "Nie ukończono analizy problemu. Nie można pobrać wyników",
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+#         problem_id = request.query_params.get('problem_id')
+#         if problem_id is None:
+#             return Response(
+#                 "Nie podano id problemu.",
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+#         options = [option.id for option in Option.objects.filter(problem_id=problem_id).order_by('id')]
+#         if len(Rank.objects.filter(user_id=user_id, option__in=options)) > 0:
+#             ranks = [
+#                 {
+#                     "option": rank.option.id,
+#                     "synth_var": rank.rank
+#                 }
+#                 for rank in Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank')
+#             ]
+#             return Response(ranks, status=status.HTTP_200_OK)
+#         criteria = Criterion.objects.filter(problem=problem_id)
+#         criteriaMatrix = [[0] * len(criteria)] * len(criteria)
+#         for i, criterionA in enumerate(criteria):
+#             for j, criterionB in enumerate(criteria):
+#                 if criteriaMatrix[i][j] != 0:
+#                     continue
+#                 elif i == j:
+#                     criteriaMatrix[i][j] = 1
+#                 else:
+#                     comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionA.id,
+#                                                                    criterion_b=criterionB.id)
+#                     if len(comparison) == 0:
+#                         comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
+#                                                                        criterion_b=criterionA.id)
+#                         criteriaMatrix[i][j] = 1 / comparison[0].value
+#                         criteriaMatrix[j][i] = comparison[0].value
+#                     else:
+#                         criteriaMatrix[i][j] = comparison[0].value
+#                         criteriaMatrix[j][i] = 1 / comparison[0].value
+#         optionMatrices = []
+#         for criterion in criteria:
+#             crit_options = CriterionOption.objects.filter(criterion=criterion.id).order_by('criterion')
+#             matrix = [[0 for i in range(len(crit_options))] for j in range(len(crit_options))]
+#             for i, optionA in enumerate(crit_options):
+#                 for j, optionB in enumerate(crit_options):
+#                     if matrix[i][j] != 0:
+#                         continue
+#                     elif i == j:
+#                         matrix[i][j] = 1
+#                     else:
+#                         comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
+#                                                                      option_b=optionB.id)
+#                         if len(comparison) == 0:
+#                             comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionB.id,
+#                                                                          option_b=optionA.id)
+#                             matrix[i][j] = 1 / comparison[0].value
+#                             matrix[j][i] = comparison[0].value
+#                         else:
+#                             matrix[i][j] = comparison[0].value
+#                             matrix[j][i] = 1 / comparison[0].value
+#             optionMatrices.append(matrix)
+#         synthVars = MCDA.AHP(criteriaMatrix, optionMatrices)
+#         ranks = [Rank(None, user_id, option, synthVars[i], "") for (i, option) in enumerate(options)]
+#         Rank.objects.bulk_create(ranks)
+#         ranks = [
+#             {
+#                 "option" : rank.option.id,
+#                 "synth_var": rank.rank
+#             }
+#             for rank in Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank')
+#         ]
+#         return Response(ranks, status=status.HTTP_200_OK)
 
-    def get_user(self, request):
-        try:
-            userToken = request.META['HTTP_AUTHORIZATION'].split(' ')[1]
-            return JwtUtil.get_user(userToken)
-        except:
-            return None
+class SystemApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        systems = []
+        for user in AppUser.objects.all():
+            if len(OptionComparison.objects.filter(user_id=user.id)) == 0:
+                continue
+            problem_id = user.training_group+1
+            criteria = Criterion.objects.filter(problem=problem_id)
+            criteriaMatrix =[[0 for i in range(len(criteria))] for j in range(len(criteria))]
+            for i, criterionA in enumerate(criteria):
+                for j, criterionB in enumerate(criteria):
+                    if criteriaMatrix[i][j] != 0:
+                        continue
+                    elif i == j:
+                        criteriaMatrix[i][j] = 1
+                    else:
+                        comparison = CriteriaComparison.objects.filter(user_id=user.id, criterion_a=criterionA.id,
+                                                                       criterion_b=criterionB.id)
+                        if len(comparison) == 0:
+                            comparison = CriteriaComparison.objects.filter(user_id=user.id, criterion_a=criterionB.id,
+                                                                           criterion_b=criterionA.id)
+                            criteriaMatrix[i][j] = 1 / comparison[0].value
+                            criteriaMatrix[j][i] = comparison[0].value
+                        else:
+                            criteriaMatrix[i][j] = comparison[0].value
+                            criteriaMatrix[j][i] = 1 / comparison[0].value
+            print(criteriaMatrix)
+            optionMatrices = []
+            for criterion in criteria:
+                crit_options = CriterionOption.objects.filter(criterion=criterion.id).order_by('criterion')
+                matrix = [[0 for i in range(len(crit_options))] for j in range(len(crit_options))]
+                for i, optionA in enumerate(crit_options):
+                    for j, optionB in enumerate(crit_options):
+                        if matrix[i][j] != 0:
+                            continue
+                        elif i == j:
+                            matrix[i][j] = 1
+                        else:
+                            comparison = OptionComparison.objects.filter(user_id=user.id, option_a=optionA.id,
+                                                                         option_b=optionB.id)
+                            if len(comparison) == 0:
+                                comparison = OptionComparison.objects.filter(user_id=user.id, option_a=optionB.id,
+                                                                             option_b=optionA.id)
+                                matrix[i][j] = 1 / comparison[0].value
+                                matrix[j][i] = comparison[0].value
+                            else:
+                                matrix[i][j] = comparison[0].value
+                                matrix[j][i] = 1 / comparison[0].value
+                optionMatrices.append(matrix)
+            (criteria_vector, option_vectors) = MCDA.AHP_weights(criteriaMatrix, optionMatrices)
+            systems.append(
+                {
+                    'user_id':user.id,
+                    'problem_id':problem_id,
+                    'criteria':criteria_vector,
+                    'options':option_vectors
+                })
+        return Response(systems, status=status.HTTP_200_OK)
+
+class AhpResultApiView(APIView):
 
     def get(self, request, *args, **kwargs):
-        user_id = self.get_user(request)
-        if user_id is None:
-            return Response(
-                "Podczas pobierania wyników wystąpił błąd.",
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        if len(CriteriaComparison.objects.filter(user_id=user_id)) == 0 or len(
-                OptionComparison.objects.filter(user_id=user_id)) == 0:
-            return Response(
-                "Nie ukończono analizy problemu. Nie można pobrać wyników",
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        problem_id = request.query_params.get('problem_id')
-        if problem_id is None:
-            return Response(
-                "Nie podano id problemu.",
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        options = [option.id for option in Option.objects.filter(problem_id=problem_id).order_by('id')]
-        if len(Rank.objects.filter(user_id=user_id, option__in=options)) > 0:
+        for user in AppUser.objects.all():
+            if len(OptionComparison.objects.filter(user_id=user.id)) == 0:
+                continue
+            problem_id = user.training_group + 1
+            user_id = user.id
+            criteria = Criterion.objects.filter(problem=problem_id)
+            criteriaMatrix = [[0 for i in range(len(criteria))] for j in range(len(criteria))]
+            for i, criterionA in enumerate(criteria):
+                for j, criterionB in enumerate(criteria):
+                    if criteriaMatrix[i][j] != 0:
+                        continue
+                    elif i == j:
+                        criteriaMatrix[i][j] = 1
+                    else:
+                        comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionA.id,
+                                                                       criterion_b=criterionB.id)
+                        if len(comparison) == 0:
+                            comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
+                                                                           criterion_b=criterionA.id)
+                            criteriaMatrix[i][j] = 1 / comparison[0].value
+                            criteriaMatrix[j][i] = comparison[0].value
+                        else:
+                            criteriaMatrix[i][j] = comparison[0].value
+                            criteriaMatrix[j][i] = 1 / comparison[0].value
+            optionMatrices = []
+            options = [option.id for option in Option.objects.filter(problem_id=problem_id).order_by('id')]
+            for criterion in criteria:
+                crit_options = CriterionOption.objects.filter(criterion=criterion.id).order_by('criterion')
+                matrix = [[0 for i in range(len(crit_options))] for j in range(len(crit_options))]
+                for i, optionA in enumerate(crit_options):
+                    for j, optionB in enumerate(crit_options):
+                        if matrix[i][j] != 0:
+                            continue
+                        elif i == j:
+                            matrix[i][j] = 1
+                        else:
+                            comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
+                                                                         option_b=optionB.id)
+                            if len(comparison) == 0:
+                                comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionB.id,
+                                                                             option_b=optionA.id)
+                                matrix[i][j] = 1 / comparison[0].value
+                                matrix[j][i] = comparison[0].value
+                            else:
+                                matrix[i][j] = comparison[0].value
+                                matrix[j][i] = 1 / comparison[0].value
+                optionMatrices.append(matrix)
+            synthVars = MCDA.AHP(criteriaMatrix, optionMatrices)
+            ranks = [Rank(None, user_id, option, synthVars[i], "") for (i, option) in enumerate(options)]
+            Rank.objects.bulk_create(ranks)
             ranks = [
                 {
-                    "option": rank.option.id,
+                    "option" : rank.option.id,
                     "synth_var": rank.rank
                 }
                 for rank in Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank')
             ]
-            return Response(ranks, status=status.HTTP_200_OK)
-        criteria = Criterion.objects.filter(problem=problem_id)
-        criteriaMatrix = [[0] * len(criteria)] * len(criteria)
-        for i, criterionA in enumerate(criteria):
-            for j, criterionB in enumerate(criteria):
-                if criteriaMatrix[i][j] != 0:
-                    continue
-                elif i == j:
-                    criteriaMatrix[i][j] = 1
-                else:
-                    comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionA.id,
-                                                                   criterion_b=criterionB.id)
-                    if len(comparison) == 0:
-                        comparison = CriteriaComparison.objects.filter(user_id=user_id, criterion_a=criterionB.id,
-                                                                       criterion_b=criterionA.id)
-                        criteriaMatrix[i][j] = 1 / comparison[0].value
-                        criteriaMatrix[j][i] = comparison[0].value
-                    else:
-                        criteriaMatrix[i][j] = comparison[0].value
-                        criteriaMatrix[j][i] = 1 / comparison[0].value
-        optionMatrices = []
-        for criterion in criteria:
-            crit_options = CriterionOption.objects.filter(criterion=criterion.id).order_by('criterion')
-            matrix = [[0 for i in range(len(crit_options))] for j in range(len(crit_options))]
-            for i, optionA in enumerate(crit_options):
-                for j, optionB in enumerate(crit_options):
-                    if matrix[i][j] != 0:
-                        continue
-                    elif i == j:
-                        matrix[i][j] = 1
-                    else:
-                        comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionA.id,
-                                                                     option_b=optionB.id)
-                        if len(comparison) == 0:
-                            comparison = OptionComparison.objects.filter(user_id=user_id, option_a=optionB.id,
-                                                                         option_b=optionA.id)
-                            matrix[i][j] = 1 / comparison[0].value
-                            matrix[j][i] = comparison[0].value
-                        else:
-                            matrix[i][j] = comparison[0].value
-                            matrix[j][i] = 1 / comparison[0].value
-            optionMatrices.append(matrix)
-        synthVars = MCDA.AHP(criteriaMatrix, optionMatrices)
-        ranks = [Rank(None, user_id, option, synthVars[i], "") for (i, option) in enumerate(options)]
-        Rank.objects.bulk_create(ranks)
-        ranks = [
-            {
-                "option" : rank.option.id,
-                "synth_var": rank.rank
-            }
-            for rank in Rank.objects.filter(user_id=user_id, option__in=options).order_by('-rank')
-        ]
-        return Response(ranks, status=status.HTTP_200_OK)
+        return Response('', status=status.HTTP_200_OK)

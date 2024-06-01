@@ -36,5 +36,6 @@ urlpatterns = [
     path("answer", views.AnswerApiView.as_view()),
     path("password/recovery/request", views.UserPasswordRecoveryRequestView.as_view()),
     path("password/reset", views.UserPasswordResetView.as_view()),
+    path("system", views.SystemApiView.as_view()),
 ]
 
