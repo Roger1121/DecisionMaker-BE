@@ -7,3 +7,4 @@ from .surveyViews import *
 from .userViews import *
 from .ahpViews import *
 from .questionViews import *
+from .crViews import *

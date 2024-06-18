@@ -37,5 +37,7 @@ urlpatterns = [
     path("password/recovery/request", views.UserPasswordRecoveryRequestView.as_view()),
     path("password/reset", views.UserPasswordResetView.as_view()),
     path("system", views.SystemApiView.as_view()),
+    path("criterion/cr", views.CriteriaConsistencyApiView.as_view()),
+    path("options/cr", views.OptionsConsistencyApiView.as_view()),
 ]
 
