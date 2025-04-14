@@ -1,0 +1,1 @@
+This is a project of an application helping in comparison of different Multicriteria Decission Analysis methods. This particular project focused on comparison of effectiveness and utility of two MCDA methods - AHP and Hellwig's. This is a backend application written in Django Rest Framework.
